@@ -15,9 +15,10 @@ import TopNav from './components/TopNav.vue'
     </main>
     <footer class="app-footer">
       <div class="footer-inner">
-        <span class="footer-brand">FileCut</span>
+        <a href="/" class="footer-brand">FileCut</a>
         <span class="footer-meta">·  100% 浏览器本地处理 · 文件永不上传 · 零限制</span>
         <span class="footer-meta">· 处理即销毁 · 无服务器留存</span>
+        <span class="footer-meta">· <a href="/about">关于我们</a> · <a href="/guide/pdf-to-word">使用指南</a></span>
       </div>
     </footer>
   </div>
@@ -62,9 +63,15 @@ import TopNav from './components/TopNav.vue'
   font-weight: 900;
   letter-spacing: -0.02em;
 }
+.footer-brand:hover { color: var(--accent); }
 .footer-meta {
   color: var(--ink-soft);
 }
+.footer-meta a {
+  color: var(--ink-soft);
+  text-decoration: underline;
+}
+.footer-meta a:hover { color: var(--accent); }
 
 .page-enter-active, .page-leave-active {
   transition: opacity 0.15s ease, transform 0.2s ease;

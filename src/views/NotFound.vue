@@ -8,7 +8,7 @@ const cat = categories[0].id
     <div class="big-404">404</div>
     <h1 class="nb-title">页面不存在</h1>
     <p class="nb-subtitle">你访问的工具不存在或尚未实现</p>
-    <a href="#/" class="nb-btn primary lg">返回首页</a>
+    <a href="/" class="nb-btn primary lg">返回首页</a>
   </div>
 </template>
 

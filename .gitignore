@@ -20,3 +20,17 @@ npm-debug.log*
 # 环境变量
 .env
 .env.local
+
+# AI 工具缓存
+.workbuddy/
+.xiaohongshu/
+.wrangler/
+
+# 临时/测试产物
+about-test.bin
+*.log
+backend.log
+vite.log
+*.png
+!public/**/*.png
+小程序可行性尽调报告.html

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" fill="#f4ecd8"/>
+  <rect x="10" y="10" width="80" height="80" fill="#1a1a1a"/>
+  <text x="50" y="70" font-family="monospace" font-size="60" font-weight="bold" fill="#c4ff00" text-anchor="middle">FC</text>
+</svg>

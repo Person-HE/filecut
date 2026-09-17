@@ -188,7 +188,7 @@ function removeFile() {
 
       <div class="nb-grid cols-3 mt-16">
         <a v-for="t in recommendations" :key="t.id"
-           :href="`#${t.path}`"
+           :href="`${t.path}`"
            class="nb-card tool-card"
            :class="{ universal: t.isUniversal }">
           <div class="tool-icon">{{ t.icon }}</div>

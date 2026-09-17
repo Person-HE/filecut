@@ -6,7 +6,7 @@ import wasm from 'vite-plugin-wasm'
 // 所有处理在浏览器端完成，零后端依赖
 export default defineConfig({
   plugins: [vue(), wasm()],
-  base: './',
+  base: '/',
   build: {
     target: 'es2020',
     outDir: 'dist',

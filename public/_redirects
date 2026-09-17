@@ -1,1 +1,3 @@
-/*    /index.html   200
+# Cloudflare Pages SPA fallback (history mode)
+# 静态文件优先匹配；其余所有路由回退到 index.html 供 Vue Router 处理
+/*  /index.html  200

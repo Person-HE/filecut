@@ -20,8 +20,8 @@ const tool = findToolByPath(route.path)
         <strong>状态：</strong>开发中 · 该功能即将上线
       </div>
       <div class="actions">
-        <a :href="`#/category/${tool?.categoryId || 'pdf'}`" class="nb-btn">查看同类工具</a>
-        <a href="#/" class="nb-btn primary">返回首页</a>
+        <a :href="`/category/${tool?.categoryId || 'pdf'}`" class="nb-btn">查看同类工具</a>
+        <a href="/" class="nb-btn primary">返回首页</a>
       </div>
     </div>
   </div>

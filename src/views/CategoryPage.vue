@@ -13,7 +13,7 @@ const category = computed(() => categories.find(c => c.id === route.params.id))
 <template>
   <div class="category-page" v-if="category">
     <div class="breadcrumb nb-subtitle">
-      <a href="#/">首页</a> / {{ category.name }}
+      <a href="/">首页</a> / {{ category.name }}
     </div>
     <h1 class="nb-title">
       <span class="cat-icon">{{ category.icon }}</span>
@@ -22,7 +22,7 @@ const category = computed(() => categories.find(c => c.id === route.params.id))
     <p class="cat-desc">{{ category.desc }} · 共 {{ category.tools.length }} 个工具</p>
 
     <div class="tools-grid">
-      <a v-for="t in category.tools" :key="t.id" :href="`#${t.path}`" class="tool-card nb-card">
+      <a v-for="t in category.tools" :key="t.id" :href="`${t.path}`" class="tool-card nb-card">
         <div class="tool-card-icon">{{ t.icon }}</div>
         <div class="tool-card-title">{{ t.title }}</div>
         <div class="tool-card-desc">{{ t.desc }}</div>
@@ -32,7 +32,7 @@ const category = computed(() => categories.find(c => c.id === route.params.id))
   </div>
   <div v-else class="not-found">
     <h1 class="nb-title">分类不存在</h1>
-    <a href="#/" class="nb-btn primary">返回首页</a>
+    <a href="/" class="nb-btn primary">返回首页</a>
   </div>
 </template>
 

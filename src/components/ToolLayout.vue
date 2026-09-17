@@ -27,9 +27,9 @@ const categoryName = computed(() => route.meta?.categoryName || '')
 
     <header class="tool-header">
       <div class="breadcrumb">
-        <a href="#/">首页</a>
+        <a href="/">首页</a>
         <span> / </span>
-        <a :href="`#/category/${route.meta?.category}`">{{ categoryName }}</a>
+        <a :href="`/category/${route.meta?.category}`">{{ categoryName }}</a>
         <span> / </span>
         <span class="current">{{ title }}</span>
       </div>
