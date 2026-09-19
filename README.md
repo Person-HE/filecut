@@ -86,11 +86,24 @@ Point `PRERENDER_EXECUTABLE_PATH` at a browser to override.
 
 ## Deploying
 
-The site is fully static.
+The site is fully static — but the build you publish matters.
 
 ```bash
-npx wrangler pages deploy dist --project-name filecut
+npm run build:prerender                                  # 131 static HTML routes
+npx wrangler pages deploy dist --project-name filecut    # publish that output
 ```
+
+**Why not Pages' Git integration build:** Cloudflare's build image cannot run the
+prerender step, because `npx playwright install chromium` yields no usable browser
+there. A Git-integrated build of `npm run build` publishes the **SPA shell only** —
+one HTML document, no per-route pages — which silently removes the whole SEO and
+AI-crawler surface. Verified on this project: the prerendered route tree came back
+404 from a Pages build, and the alias fell to a 6 KB shell instead of the 55 KB
+prerendered home page.
+
+So either publish from a machine that has a browser (as above), or move the prerender
+step into your own CI runner with Chromium installed and deploy with
+`npx wrangler pages deploy`.
 
 `public/_redirects` provides the SPA fallback and `public/_headers` sets long-lived
 immutable caching on hashed assets plus a `Cross-Origin-Embedder-Policy`. If you
