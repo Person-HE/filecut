@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-19T11:10:52.014Z",
+  "project": "filecut",
+  "commands": {
+    "build": "npm run build:prerender",
+    "test": null,
+    "metrics": "node scripts/metrics.mjs"
+  },
+  "environment": {
+    "platform": "Windows_NT 10.0.26200 (x64)",
+    "cpus": 16,
+    "cpuModel": "AMD Ryzen 7 7735H with Radeon Graphics",
+    "memoryGB": 15.2,
+    "node": "v24.12.0",
+    "npm": "11.6.2",
+    "timezone": "Asia/Shanghai"
+  },
+  "git": {
+    "commit": "76ec343c69f02a131b345d97ade186ce0db43ed8",
+    "shortCommit": "76ec343",
+    "branch": "main",
+    "dirty": true
+  },
+  "build": {
+    "clean": true,
+    "durationMs": 309156,
+    "durationS": 309.2
+  },
+  "source": {
+    "roots": [
+      "src",
+      "scripts"
+    ],
+    "files": 143,
+    "totalLines": 33489,
+    "codeLines": 28915,
+    "commentLines": 1477,
+    "blankLines": 3097,
+    "commentRatio": 4.4,
+    "byLanguage": {
+      "Vue": {
+        "files": 127,
+        "lines": 31591
+      },
+      "JavaScript": {
+        "files": 14,
+        "lines": 1193
+      },
+      "CSS": {
+        "files": 1,
+        "lines": 412
+      },
+      "JavaScript (ESM)": {
+        "files": 1,
+        "lines": 293
+      }
+    }
+  },
+  "bundle": {
+    "root": "dist",
+    "files": 397,
+    "rawBytes": 35562414,
+    "rawMB": 33.91,
+    "gzipBytes": 9236239,
+    "gzipMB": 8.81,
+    "compressionRatio": 26,
+    "largestFiles": [
+      {
+        "file": "assets/ort-wasm-simd-threaded.jsep-D5Jk56-t.wasm",
+        "rawBytes": 23914392,
+        "gzipBytes": 5618054
+      },
+      {
+        "file": "assets/pdf.worker.min-yatZIOMy.mjs",
+        "rawBytes": 1375838,
+        "gzipBytes": 402927
+      },
+      {
+        "file": "assets/image-convert-BQXFTQss.js",
+        "rawBytes": 1357665,
+        "gzipBytes": 341619
+      },
+      {
+        "file": "assets/docx-CsyIvTKw.js",
+        "rawBytes": 574507,
+        "gzipBytes": 148857
+      },
+      {
+        "file": "assets/pdflib-sEWku4z3.js",
+        "rawBytes": 519549,
+        "gzipBytes": 206455
+      }
+    ],
+    "byType": {
+      ".wasm": {
+        "files": 1,
+        "rawBytes": 23914392,
+        "gzipBytes": 5618054
+      },
+      ".js": {
+        "files": 156,
+        "rawBytes": 7531093,
+        "gzipBytes": 2426734
+      },
+      ".mjs": {
+        "files": 3,
+        "rawBytes": 2175663,
+        "gzipBytes": 620394
+      },
+      ".html": {
+        "files": 131,
+        "rawBytes": 1797551,
+        "gzipBytes": 523498
+      },
+      ".css": {
+        "files": 101,
+        "rawBytes": 119505,
+        "gzipBytes": 45609
+      },
+      ".xml": {
+        "files": 1,
+        "rawBytes": 23172,
+        "gzipBytes": 1129
+      },
+      "(none)": {
+        "files": 2,
+        "rawBytes": 644,
+        "gzipBytes": 515
+      },
+      ".svg": {
+        "files": 1,
+        "rawBytes": 308,
+        "gzipBytes": 210
+      },
+      ".txt": {
+        "files": 1,
+        "rawBytes": 86,
+        "gzipBytes": 96
+      }
+    },
+    "counts": {
+      "js": 159,
+      "css": 101,
+      "font": 0,
+      "wasm": 1,
+      "image": 1,
+      "html": 131
+    }
+  },
+  "tests": {
+    "configured": false
+  },
+  "dependencies": {
+    "runtime": 39,
+    "dev": 5,
+    "directTotal": 44
+  }
+}

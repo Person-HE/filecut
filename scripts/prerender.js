@@ -15,8 +15,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const DIST_DIR = path.resolve(__dirname, '../dist')
 const PORT = 3456
 
-const EDGE_PATH = process.env.PUPPETEER_EXECUTABLE_PATH ||
+const PREFERRED_BROWSER = process.env.PRERENDER_EXECUTABLE_PATH ||
   'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'
+
+// 首选路径不存在时回落到 Playwright 自带的 Chromium，使脚本可在任意机器与 CI 上运行
+const BROWSER_EXECUTABLE = fs.existsSync(PREFERRED_BROWSER) ? PREFERRED_BROWSER : undefined
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -85,7 +88,7 @@ async function prerender() {
 
   const server = await startServer()
   const browser = await chromium.launch({
-    executablePath: EDGE_PATH,
+    executablePath: BROWSER_EXECUTABLE,
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
   })

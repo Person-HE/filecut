@@ -1,132 +1,135 @@
 # FileCut
 
-> **纯前端文档工具站 · 112 个工具 · 文件永不上传**
+**112 file tools that run entirely in your browser. Nothing is ever uploaded.**
 
-所有处理在浏览器本地完成（WebAssembly + Web Worker）。无后端、无账号、无次数限制。
+[![Live demo](https://img.shields.io/badge/Live%20demo-filecut.pages.dev-2f7cf6?style=flat-square)](https://filecut.pages.dev)
+![Tools](https://img.shields.io/badge/tools-112-1a7f37?style=flat-square)
+![Backend](https://img.shields.io/badge/backend-none-informational?style=flat-square)
+![Uploads](https://img.shields.io/badge/uploads-0-critical?style=flat-square)
 
-**在线地址**：https://filecut.pages.dev
+PDF, Word, Excel, PPT, images, audio/video, QR codes, fonts, archives, encoding — 13 categories, 112 tools, all client-side via WASM and Web Workers. Open a tool, drop a file, get the result. No account, no quota, no server that could log your documents.
+
+**→ [filecut.pages.dev](https://filecut.pages.dev)**
 
 ---
 
-## 一句话定位
+## Why this exists
 
-面向学生与办公族的隐私优先文件工具箱：PDF / Word / Excel / PPT / 图片 / 音视频 / 字体 / 二维码等 13 类 112 个工具，打开网页即用，文件不出本机。
+Every "free online converter" uploads your file to someone's server. That is unacceptable for contracts, ID scans, financial exports, unreleased designs and source code. FileCut is the alternative where the claim is *architecturally* true rather than a policy promise: there is no upload endpoint in the codebase, so there is nothing to trust.
 
-## 核心能力
+You can verify this yourself in 30 seconds:
 
-| 类别 | 工具数 | 代表能力 |
-|------|--------|----------|
-| PDF | 24 | 合并、拆分、压缩、转 Word/Excel/PPT/图片、水印、加密、OCR、脱敏 |
-| Word | 10 | 预览、转 PDF/HTML/TXT、模板填充、编辑、对比、隐私清理 |
-| Excel | 12 | 预览、转 PDF/CSV/JSON、筛选排序、公式校验、图表、合并 |
-| PPT | 7 | 预览、转 PDF/图片/Markdown、模板填充、媒体提取 |
-| 图片 | 15 | 格式转换、压缩、裁剪、水印、抠图、EXIF、OCR、GIF、SVG |
-| 文本编码 | 10 | 编码转换/检测、JSON/YAML/XML/Markdown 互转、Diff、加密、哈希 |
-| 压缩文件 | 4 | ZIP 压缩/解压/预览/包内编辑 |
-| 电子书 | 3 | EPUB 阅读、转 PDF/TXT |
-| 音视频 | 6 | 转码、压缩、剪辑、GIF、抽音频 |
-| 二维码 | 4 | 生成/识别/条形码/批量 |
-| 字体 | 3 | 转换、预览、子集化 |
-| 文件通用 | 6 | 哈希、类型识别、压缩、重命名、内容搜索、时间戳 |
-| 特殊场景 | 8 | 解密助手、损坏修复、兼容检测、大文件分块、批量中心、中文字体嵌入、隐私扫描、转换向导 |
+1. Open DevTools → **Network** tab → set throttling to **Offline**.
+2. Load [filecut.pages.dev](https://filecut.pages.dev) and run any tool on a local file.
+3. It works. The Network tab shows requests only to `filecut.pages.dev` and the CDN hosts of the engines it loads — never a file-upload POST.
 
-## 隐私承诺
+## What's in it
 
-1. **零上传**：文件仅进入浏览器内存 / IndexedDB 临时区，不发往任何业务服务器。
-2. **可验证**：DevTools Network 面板中，选择文件后应看不到对应文件体的上行请求。
-3. **COOP/COEP**：通过 `Cross-Origin-Opener-Policy` / `Cross-Origin-Embedder-Policy` 启用 SharedArrayBuffer，支撑多线程 WASM。
+| Category | Tools | Representative capabilities |
+| --- | ---: | --- |
+| PDF | 24 | merge, split, compress, → Word/Excel/PPT/image, watermark, encrypt, OCR, redact |
+| Image | 15 | convert, compress, crop, watermark, background removal, EXIF, OCR, GIF, SVG |
+| Excel | 12 | preview, → PDF/CSV/JSON, filter/sort, formula check, charts, merge |
+| Word | 10 | preview, → PDF/HTML/TXT, mail-merge fill, edit, compare, strip metadata |
+| Text & encoding | 10 | encoding convert/detect, JSON/YAML/XML/Markdown, diff, hash, encrypt |
+| Special scenarios | 8 | repair helpers, compatibility checks, chunked large files, privacy scan |
+| Audio / video | 6 | transcode, compress, trim, GIF, extract audio |
+| General file | 6 | hash, type sniff, compress, batch rename, content search, timestamps |
+| Archive | 4 | zip create/extract/preview/edit-in-place |
+| QR & barcode | 4 | generate, read, barcode, batch |
+| E-book | 3 | EPUB reader, → PDF/TXT |
+| Font | 3 | convert, preview, subset |
+| PPT | 7 | preview, → PDF/image/Markdown, template fill, media extraction |
 
-## 技术栈
+Engines are loaded on demand per tool: `pdf-lib`, `pdf.js`, SheetJS, `mammoth`, `pptxgenjs`, `ffmpeg.wasm`, `tesseract.js`, and ONNX Runtime WASM for background removal.
 
-- Vue 3 + Vite 5 + Vue Router 4
-- 纯静态 SPA，无 Node 运行时依赖
-- 处理引擎：pdf-lib / pdfjs / sheetjs / mammoth / pptxgenjs / ffmpeg.wasm / tesseract.js / onnxruntime（抠图）等
-- 构建时预渲染全部路由（SEO / 首屏 HTML）
-- 部署：Cloudflare Pages（`public/_redirects` SPA fallback + 长缓存头）
+## Measured, not claimed
 
-## 快速开始
+All numbers below are produced by one command on this checkout —
+`npm run metrics` → `docs/metrics.json` — and record the machine they came from.
 
-```bash
-# 环境：Node.js 18+（实测 Node 24.12.0 / npm 11.6.2）
-npm ci
-npm run dev            # 本地开发 http://localhost:5173
+| Metric | Value |
+| --- | --- |
+| Production build + prerender | 309.2 s |
+| Build output | 397 files · 33.91 MB raw · 8.81 MB gzip |
+| Prerendered SEO pages | 131 |
+| Source | 143 files · 33,489 lines (28,915 code) |
+| Backend / API keys required | none |
+| Largest single asset | `ort-wasm-simd-threaded.jsep.wasm` — 23.4 MB (background removal) |
 
-npm run build          # 仅生产构建 → dist/
-npm run build:prerender  # 构建 + 路由预渲染 + 生成 _redirects
-npm run preview        # 本地预览生产包
-```
+Live behaviour, cold cache, measured in a real browser against the deployed site:
 
-## 部署到 Cloudflare Pages
+| Metric | Value |
+| --- | --- |
+| TTFB | 740 ms |
+| `load` event | 2.66 s |
+| First-page transfer | ~104 KB (engines load lazily per tool) |
+| Links reachable from home | 148 |
 
-```bash
-# 1. 登录（浏览器授权一次）
-npx wrangler login
+The 23.4 MB ONNX asset is why the first background-removal run is slow and every other tool is not: it is fetched only when that tool opens.
 
-# 2. 部署
-npx wrangler pages deploy dist --project-name=filecut --branch=main
-```
-
-Pages 构建设置（Dashboard 可选）：
-
-| 项 | 值 |
-|----|----|
-| Build command | `npm run build:prerender` |
-| Build output directory | `dist` |
-| Node version | 18+ |
-
-## 项目结构
-
-```
-FileCut/
-├── public/
-│   ├── _headers          # COOP/COEP + 静态资源长缓存
-│   └── _redirects        # SPA fallback（预渲染也会生成）
-├── src/
-│   ├── router/
-│   │   ├── categories.js # 13 类 / 112 工具元数据（单一真源）
-│   │   └── index.js      # 动态路由 + SEO meta
-│   ├── views/<category>/<tool>.vue
-│   ├── components/       # ToolLayout / FileDrop / FileList / ResultViewer
-│   └── utils/            # pdfjs / pdflib / download / format
-├── scripts/prerender.js  # 构建时全路由预渲染
-└── vite.config.js
-```
-
-新增工具：在 `categories.js` 声明元数据 → 创建 `src/views/<cat>/<id>.vue` → 路由自动生效。
-
-## 量化数据（可复现）
-
-采集环境：**Windows 11 · Node.js v24.12.0 · npm 11.6.2**  
-采集日期：**2026-09-17**  
-复现命令：
+## Running it
 
 ```bash
-npm ci
-npm run build:prerender
-# 体积统计
-Get-ChildItem dist -Recurse -File | Measure-Object Length -Sum
+node -v            # 18+ (measured on 24.12.0)
+npm install
+npm run dev        # http://localhost:5173
+npm run build      # SPA only, ~18 s
+npm run build:prerender   # production: build + 131 static HTML routes, ~5 min
+npm run metrics    # regenerate docs/metrics.json and docs/metrics.md
 ```
 
-| 指标 | 数值 |
-|------|------|
-| 工具分类 | 13 |
-| 功能工具 | 112 |
-| 预渲染路由 | 131（含首页/分类/关于/指南） |
-| `vite build` 耗时 | **17.10 s** |
-| `build:prerender` 总耗时 | **261 s**（含预渲染写盘） |
-| 产出文件数 | 397 |
-| `dist/` 总体积 | **33.92 MB**（含 ONNX WASM，见下） |
-| 最大 chunk | `ort-wasm-simd-threaded.jsep*.wasm` 22.8 MB（抠图推理，按需加载） |
-| 次大 chunk | `pdf.worker.min` 1.31 MB · `image-convert` 1.29 MB · `docx` 0.55 MB |
+`prerender` drives a headless Chromium over every route. It prefers
+`%ProgramFiles(x86)%\Microsoft\Edge\Application\msedge.exe` and falls back to the
+Chromium bundled with Playwright, so it runs on any machine that has either.
+Point `PRERENDER_EXECUTABLE_PATH` at a browser to override.
 
-说明：抠图等 AI 能力依赖 onnxruntime WASM，体积大但**懒加载**，首屏只加载路由对应 JS。
+## Deploying
 
-## 本地验证（零上传）
+The site is fully static.
 
-1. 打开站点 → DevTools → Network。
-2. 选择任意 PDF/图片处理，确认无文件体上行。
-3. 处理完成后结果可直接在页面下载。
+```bash
+npx wrangler pages deploy dist --project-name filecut
+```
+
+`public/_redirects` provides the SPA fallback and `public/_headers` sets long-lived
+immutable caching on hashed assets plus a `Cross-Origin-Embedder-Policy`. If you
+serve behind a different host, update `SITE_ORIGIN` in `src/router/index.js` so
+canonical URLs and JSON-LD match your domain.
+
+## Repository layout
+
+```
+src/
+  router/categories.js   the tool registry — 112 entries, 13 categories
+  views/<category>/      one .vue per tool (121 views)
+  utils/                 shared engine loaders (pdf, sheets, fonts, workers)
+scripts/
+  prerender.js           renders every route to static HTML for SEO
+  metrics.mjs            reproducible build/bundle/source measurement
+public/
+  _redirects _headers    hosting config consumed by Cloudflare Pages
+docs/
+  metrics.json           machine-readable output of `npm run metrics`
+```
+
+## Limitations, stated plainly
+
+- **No automated test suite.** Correctness is verified per tool in the browser; the build and prerender steps fail loudly if a route breaks. This is the project's biggest gap.
+- Some engines load from public CDNs (jsDelivr, unpkg, `esm.sh`, Google Fonts). Offline, or if a CDN is blocked in your region, the tools that depend on them degrade while the rest of the site still works.
+- The deployed `Cross-Origin-Embedder-Policy: require-corp` and CDN-loaded engines interact: a tool that fetches a cross-origin script can fail silently under that header.
+- UI and documentation pages are written in Chinese; the tool labels are short and icon-led enough to use otherwise.
+
+## 中文说明
+
+FileCut 是一个**纯前端**文档工具站：112 个工具、13 个分类，PDF / Word / Excel / PPT / 图片 / 音视频 / 二维码 / 字体 / 压缩包全部在浏览器内用 WASM 与 Web Worker 完成，**文件不上传、不注册、无次数限制**。
+
+- 在线使用：<https://filecut.pages.dev>
+- 隐私可自行验证：DevTools 切到离线模式后仍可正常处理本地文件，网络面板中不存在任何上传请求。
+- 上表所有数字来自一条命令：`npm run metrics`，结果落在 `docs/metrics.json`，并记录了采集机器（Windows 11 / Node 24.12.0 / Ryzen 7 7735H）。
+- 构建：`npm run build:prerender` 生成 131 个静态 HTML 路由，用于搜索引擎与 AI 爬虫收录。
+- 已知不足：无自动化测试；部分引擎依赖公共 CDN，网络受限环境下会退化。
 
 ## License
 
-Private（见仓库策略）。欢迎 Star 与 Issue。
+All rights reserved.

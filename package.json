@@ -8,7 +8,8 @@
     "build": "vite build",
     "prerender": "node scripts/prerender.js",
     "build:prerender": "vite build && node scripts/prerender.js",
-    "preview": "vite preview --port 4173"
+    "preview": "vite preview --port 4173",
+    "metrics": "node scripts/metrics.mjs --src src,scripts --dist dist --build \"npm run build:prerender\""
   },
   "dependencies": {
     "@ffmpeg/ffmpeg": "^0.12.10",
