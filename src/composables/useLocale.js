@@ -31,15 +31,11 @@ export function setLocale(lang) {
   setI18nLocale(/** @type {'zh-CN' | 'en-US'} */ (lang))
 }
 
-export function toggleLocale() {
-  setLocale(currentLocale.value === 'zh-CN' ? 'en-US' : 'zh-CN')
-}
-
 export function useLocale() {
   const { locale, t } = useI18n()
   locale.value = currentLocale.value
   setI18nLocale(/** @type {'zh-CN' | 'en-US'} */ (currentLocale.value))
-  return { currentLocale, setLocale, toggleLocale, labels: LABELS, supported: SUPPORTED_LOCALES, locale, t }
+  return { currentLocale, setLocale, labels: LABELS, supported: SUPPORTED_LOCALES, locale, t }
 }
 
 export { DEFAULT_LOCALE }

@@ -10,8 +10,8 @@ import { categoryNames, categoryIcons, toolNames } from '../i18n/toolNames'
 const router = useRouter()
 const route = useRoute()
 const { t, locale } = useI18n()
-const { currentTheme, cycleTheme, themes } = useTheme()
-const { currentLocale, toggleLocale, labels } = useLocale()
+const { currentTheme, setTheme, themes } = useTheme()
+const { currentLocale, setLocale, labels, supported } = useLocale()
 const mobileOpen = ref(false)
 const searchQuery = ref('')
 
@@ -93,12 +93,16 @@ function go(path) {
       </div>
 
       <div class="topnav-controls">
-        <button class="nb-btn sm" @click="cycleTheme" :title="t('nav.theme')" :aria-label="t('nav.theme')">
-          {{ currentTheme === 'paper' ? '📜' : currentTheme === 'fresh' ? '🌤' : currentTheme === 'tech' ? '🌃' : '🌌' }}
-        </button>
-        <button class="nb-btn sm lang-btn" @click="toggleLocale" :title="t('nav.language')" :aria-label="t('nav.language')">
-          {{ labels[currentLocale] }}
-        </button>
+        <select class="nb-select sm theme-select" v-model="currentTheme" @change="setTheme($event.target.value)">
+          <option v-for="theme in themes" :key="theme.id" :value="theme.id">
+            {{ theme.icon }} {{ theme.label }}
+          </option>
+        </select>
+        <select class="nb-select sm lang-select" v-model="currentLocale" @change="setLocale($event.target.value)">
+          <option v-for="lang in supported" :key="lang" :value="lang">
+            {{ labels[lang] }}
+          </option>
+        </select>
       </div>
     </div>
   </header>
@@ -241,9 +245,22 @@ function go(path) {
   flex-shrink: 0;
 }
 
-.lang-btn {
+.topnav-controls .nb-select.sm {
+  padding: 6px 28px 6px 10px;
+  font-size: 13px;
   font-family: var(--font-mono);
-  min-width: 48px;
+  font-weight: 600;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%231a1a1a'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  cursor: pointer;
+  min-width: 110px;
+}
+
+.topnav-controls .lang-select {
+  min-width: 70px;
 }
 
 .mobile-toggle {
