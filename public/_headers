@@ -5,6 +5,7 @@
   X-Content-Type-Options: nosniff
   X-Frame-Options: SAMEORIGIN
   Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), camera=(), microphone=(), usb=(), payment=()
 
 # WASM 文件长期缓存（Cloudflare Pages 自动识别 .wasm MIME）
 *.wasm

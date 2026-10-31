@@ -49,6 +49,16 @@ describe('vite.config.js - 构建配置', () => {
   })
 })
 
+describe('vite.config.js - 浏览器兼容别名', () => {
+  it('node:buffer 别名为 buffer polyfill', () => {
+    expect(configSrc).toMatch(/'node:buffer':\s*'buffer'/)
+  })
+
+  it('node:stream 别名为 stream-browserify', () => {
+    expect(configSrc).toMatch(/'node:stream':\s*'stream-browserify'/)
+  })
+})
+
 describe('vite.config.js - 大型库分包', () => {
   const chunks = ['pdfjs', 'pdflib', 'sheetjs', 'docx', 'image', 'wasm']
 

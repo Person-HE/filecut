@@ -6,7 +6,7 @@
  * - 用 pdf-lib + fontkit
  */
 import { ref } from 'vue'
-import { PDFDocument, rgb, StandardFonts } from 'pdf-lib'
+import { PDFDocument, rgb, StandardFonts } from '../../utils/pdflib.js'
 import * as pdfjsLib from '../../utils/pdfjs.js'
 import ToolLayout from '../../components/ToolLayout.vue'
 import FileDrop from '../../components/FileDrop.vue'

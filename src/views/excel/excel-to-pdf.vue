@@ -6,7 +6,7 @@
 import { ref, nextTick } from 'vue'
 import * as XLSX from 'xlsx'
 import html2canvas from 'html2canvas'
-import { PDFDocument } from 'pdf-lib'
+import { PDFDocument } from '../../utils/pdflib.js'
 import ToolLayout from '../../components/ToolLayout.vue'
 import FileDrop from '../../components/FileDrop.vue'
 import FileList from '../../components/FileList.vue'

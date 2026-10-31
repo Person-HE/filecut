@@ -8,7 +8,8 @@ import { onMounted, onUnmounted } from 'vue'
  */
 export function useSchemaOrg(schema, id = 'schema-' + Math.random().toString(36).slice(2, 9)) {
   onMounted(() => {
-    let el = document.getElementById(id)
+    /** @type {HTMLScriptElement | null} */
+    let el = /** @type {HTMLScriptElement | null} */ (document.getElementById(id))
     if (!el) {
       el = document.createElement('script')
       el.id = id

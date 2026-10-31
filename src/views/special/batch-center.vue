@@ -9,7 +9,7 @@
 import { ref, computed, onUnmounted } from 'vue'
 import JSZip from 'jszip'
 import imageCompression from 'browser-image-compression'
-import { PDFDocument, rgb, StandardFonts } from 'pdf-lib'
+import { PDFDocument, rgb, StandardFonts } from '../../utils/pdflib.js'
 import ToolLayout from '../../components/ToolLayout.vue'
 import FileDrop from '../../components/FileDrop.vue'
 import FileList from '../../components/FileList.vue'

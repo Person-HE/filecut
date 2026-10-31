@@ -27,7 +27,7 @@ function icon(f) {
       <span class="file-icon">{{ icon(f) }}</span>
       <span class="file-name" :title="f.name">{{ f.name }}</span>
       <span v-if="showSize" class="file-size">{{ formatBytes(f.size) }}</span>
-      <button class="file-remove" @click="emit('remove', idx)" title="移除">×</button>
+      <button class="file-remove" @click="emit('remove', idx)" title="移除" aria-label="移除">×</button>
     </div>
   </div>
 </template>

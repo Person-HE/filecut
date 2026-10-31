@@ -13,7 +13,7 @@ import ResultViewer from '../../components/ResultViewer.vue'
 import { getBaseName } from '../../utils/download.js'
 import { safeRun, showError } from '../../utils/common.js'
 import { loadPdf, renderPage } from '../../utils/pdfjs.js'
-import { PDFDocument, StandardFonts } from 'pdf-lib'
+import { PDFDocument, StandardFonts } from '../../utils/pdflib.js'
 import { createWorker } from 'tesseract.js'
 
 const files = ref([])

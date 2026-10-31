@@ -6,7 +6,7 @@
  */
 import { ref } from 'vue'
 import * as pdfjs from '../../utils/pdfjs.js'
-import { PDFDocument } from 'pdf-lib'
+import { PDFDocument } from '../../utils/pdflib.js'
 import ToolLayout from '../../components/ToolLayout.vue'
 import FileDrop from '../../components/FileDrop.vue'
 import ResultViewer from '../../components/ResultViewer.vue'

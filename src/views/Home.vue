@@ -3,6 +3,7 @@
  * FileCut 首页 - 功能总览
  */
 import { categories, allTools } from '../router/categories.js'
+import { homeFaqs as faqs } from '../data/faqs.js'
 import { useSchemaOrg } from '../composables/useSchemaOrg.js'
 
 const stats = [
@@ -10,29 +11,6 @@ const stats = [
   { num: '0', label: '后端依赖' },
   { num: '∞', label: '使用次数' },
   { num: '100%', label: '本地处理' }
-]
-
-const faqs = [
-  {
-    question: 'FileCut 是免费的吗？',
-    answer: `是的，FileCut 目前完全免费。网站提供 ${allTools.length} 个在线文件工具，无需注册、无每日次数限制、无文件大小限制，所有处理在浏览器本地完成。`
-  },
-  {
-    question: 'FileCut 的文件处理安全吗？会不会泄露隐私？',
-    answer: 'FileCut 采用纯前端架构，所有文件解析、转换、压缩都在用户自己的浏览器内完成，文件不会上传到任何服务器。因此不存在服务器被攻击、运营方滥用或第三方审查导致的隐私泄露风险，适合处理合同、论文、证件等敏感文件。'
-  },
-  {
-    question: 'FileCut 支持哪些文件格式？',
-    answer: 'FileCut 支持 PDF、Word（docx）、Excel（xlsx）、PPT（pptx）、图片（JPG/PNG/WEBP/HEIC/AVIF 等）、音视频（MP4/MP3 等）、ZIP、EPUB、CSV、JSON、YAML、XML、Markdown、字体（TTF/OTF/WOFF）等数十种格式。'
-  },
-  {
-    question: '为什么 FileCut 不需要安装软件？',
-    answer: 'FileCut 使用 WebAssembly、Web Worker 和现代浏览器 API，将原本需要桌面软件的解析能力搬到浏览器中。用户打开网页即可使用，无需下载安装，也无需担心软件版本和系统兼容性问题。'
-  },
-  {
-    question: 'FileCut 和 Smallpdf、迅捷 PDF 有什么区别？',
-    answer: 'Smallpdf、迅捷 PDF 等工具通常需要将文件上传到服务器处理，免费版可能有次数、大小或水印限制；FileCut 的所有处理在本地完成，无需上传、无限制、无水印。如果你处理的是敏感文件或不想被平台约束，FileCut 是更稳妥的选择。'
-  }
 ]
 
 const homeFaqSchema = {

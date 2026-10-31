@@ -144,7 +144,7 @@ function escapeHtml(s) {
                   @select="onFileASelect" @error="showError" />
         <div v-if="fileA" class="file-tag mt-8">
           📘 {{ fileA.name }}
-          <button class="nb-btn sm" @click="removeFileA">×</button>
+          <button class="nb-btn sm" @click="removeFileA" aria-label="移除 A 文件">×</button>
         </div>
       </div>
       <div class="diff-arrow">⇄</div>
@@ -154,7 +154,7 @@ function escapeHtml(s) {
                   @select="onFileBSelect" @error="showError" />
         <div v-if="fileB" class="file-tag mt-8">
           📘 {{ fileB.name }}
-          <button class="nb-btn sm" @click="removeFileB">×</button>
+          <button class="nb-btn sm" @click="removeFileB" aria-label="移除 B 文件">×</button>
         </div>
       </div>
     </div>

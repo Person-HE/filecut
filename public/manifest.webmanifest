@@ -1,0 +1,44 @@
+{
+  "name": "FileCut · 纯前端文档工具站",
+  "short_name": "FileCut",
+  "description": "112 个文件工具全部在浏览器本地运行，文件永不上传、无次数限制、无需注册。",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f4ecd8",
+  "theme_color": "#f4ecd8",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities"],
+  "shortcuts": [
+    {
+      "name": "PDF 工具",
+      "url": "/category/pdf",
+      "description": "PDF 转换与编辑"
+    },
+    {
+      "name": "图片工具",
+      "url": "/category/image",
+      "description": "图片压缩与编辑"
+    },
+    {
+      "name": "Word 工具",
+      "url": "/category/word",
+      "description": "Word 转换与编辑"
+    }
+  ]
+}

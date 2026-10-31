@@ -1,32 +1,10 @@
 <script setup>
 import { useSchemaOrg } from '../../composables/useSchemaOrg.js'
+import { guidePdfToWordFaqs as faqs } from '../../data/faqs.js'
 
 const pageUrl = 'https://filecut.pages.dev/guide/pdf-to-word'
 const publishedDate = '2026-07-30'
 const modifiedDate = '2026-07-30'
-
-const faqs = [
-  {
-    question: 'PDF 转 Word 后为什么格式会乱？',
-    answer: 'PDF 是固定版式格式，Word 是流式编辑格式。转换时，如果 PDF 包含复杂表格、多栏排版、特殊字体或扫描图片，转换工具需要重新推测文档结构，因此容易出现错位、字体替换或图片丢失。原生电子 PDF（由 Word/Office 直接导出）转换效果通常优于扫描件。'
-  },
-  {
-    question: '免费 PDF 转 Word 工具哪家效果最好？',
-    answer: '基于我们 2026 年 7 月对 12 份真实文档（含表格、图文混排、中文、英文）的测试：Adobe Acrobat 在线版排版保留最完整；FileCut 本地转换在中文表格保留上表现稳定；Smallpdf/iLovePDF 对简单文档效果不错，但复杂表格出错率约 18-25%。选择时应优先用原生电子 PDF 测试，而非扫描件。'
-  },
-  {
-    question: '扫描版 PDF 能转成可编辑 Word 吗？',
-    answer: '可以，但必须先经过 OCR（光学字符识别）。OCR 会识别图片中的文字并生成隐藏文字层，再导出为 Word。识别准确率受扫描清晰度、字体、语言影响，手写体或低分辨率扫描件准确率会明显下降。FileCut 的「扫描件 OCR 转可搜索 PDF」工具可作为前置步骤。'
-  },
-  {
-    question: 'PDF 转 Word 会泄露隐私吗？',
-    answer: '取决于工具的处理方式。上传式在线工具会将文件发送到服务器，存在传输和存储风险；本地处理工具（如 FileCut、Office 本地打开）文件不会离开电脑。处理合同、论文、证件等敏感文件时，建议优先选择本地方案。'
-  },
-  {
-    question: 'PDF 转 Word 后图片消失怎么办？',
-    answer: '通常是因为转换工具将图片作为背景或嵌入对象处理失败。解决方法：1）检查原 PDF 中的图片是否为矢量图；2）尝试先用 PDF 转图片工具提取页面，再插入 Word；3）使用支持嵌入图片保留的转换器重新转换。'
-  }
-]
 
 const articleSchema = {
   '@context': 'https://schema.org',

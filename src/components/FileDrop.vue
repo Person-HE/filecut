@@ -12,7 +12,7 @@ import { ref } from 'vue'
 const props = defineProps({
   accept: { type: String, default: '*' },           // 接受的文件类型 '.pdf,application/pdf'
   multiple: { type: Boolean, default: true },         // 是否允许多文件
-  maxSize: { type: Number, default: 0 },              // 单文件最大字节(0=不限)
+  maxSize: { type: Number, default: 200 * 1024 * 1024 }, // 单文件最大字节(默认 200MB)
   hint: { type: String, default: '' },                // 提示文字
   icon: { type: String, default: '⬆' }
 })

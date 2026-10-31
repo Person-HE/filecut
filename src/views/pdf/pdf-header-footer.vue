@@ -10,8 +10,8 @@ import FileList from '../../components/FileList.vue'
 import ResultViewer from '../../components/ResultViewer.vue'
 import { getBaseName } from '../../utils/download.js'
 import { safeRun, showError } from '../../utils/common.js'
-import { loadPdfLib, embedChineseFont } from '../../utils/pdflib.js'
-import { StandardFonts } from 'pdf-lib'
+import { loadPdfLib, embedChineseFont, StandardFonts } from '../../utils/pdflib.js'
+
 
 const files = ref([])
 const result = ref([])

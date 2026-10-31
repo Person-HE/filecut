@@ -16,7 +16,11 @@ const toolRoutes = categories.flatMap(cat => {
   return cat.tools.map(tool => ({
     path: tool.path,
     name: tool.id,
-    component: () => import(`../views/${cat.id}/${tool.id}.vue`).catch(() => import('../views/PlaceholderTool.vue')),
+    component: () => import(`../views/${cat.id}/${tool.id}.vue`).catch((err) => {
+      // 模块缺失时回退到占位页；其他错误（语法/导入）记录后再回退
+      console.error(`[FileCut] 路由 ${tool.path} 加载失败:`, err?.message || err)
+      return import('../views/PlaceholderTool.vue')
+    }),
     meta: {
       title: `${tool.title} - 免费在线${tool.title}工具 · FileCut`,
       desc: `${tool.desc}。100% 浏览器本地处理，文件不上传，无大小/次数限制，免费使用。`,

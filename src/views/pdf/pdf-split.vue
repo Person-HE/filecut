@@ -10,8 +10,8 @@ import FileList from '../../components/FileList.vue'
 import ResultViewer from '../../components/ResultViewer.vue'
 import { getBaseName } from '../../utils/download.js'
 import { safeRun, showError } from '../../utils/common.js'
-import { loadPdfLib } from '../../utils/pdflib.js'
-import { PDFDocument } from 'pdf-lib'
+import { loadPdfLib, PDFDocument } from '../../utils/pdflib.js'
+
 import JSZip from 'jszip'
 
 const files = ref([])

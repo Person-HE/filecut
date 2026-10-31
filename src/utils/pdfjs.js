@@ -14,9 +14,53 @@ import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url'
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker
 
 // CDN 资源 - 用于 cMap 和标准字体（中文PDF必备）
-const CDN_BASE = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82'
-pdfjsLib.GlobalWorkerOptions.cMapUrl = `${CDN_BASE}/cmaps/`
-pdfjsLib.GlobalWorkerOptions.standardFontDataUrl = `${CDN_BASE}/standard_fonts/`
+// 多源回退：jsdelivr 被墙/限流时自动切换到 unpkg
+const CDN_BASES = [
+  'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82',
+  'https://unpkg.com/pdfjs-dist@4.6.82'
+]
+// @ts-expect-error pdfjs-dist 类型未包含 cMapUrl
+pdfjsLib.GlobalWorkerOptions.cMapUrl = `${CDN_BASES[0]}/cmaps/`
+// @ts-expect-error pdfjs-dist 类型未包含 standardFontDataUrl
+pdfjsLib.GlobalWorkerOptions.standardFontDataUrl = `${CDN_BASES[0]}/standard_fonts/`
+
+/**
+ * 按候选地址依次尝试，第一个成功即返回
+ * @param {string[]} urls - 候选地址列表
+ * @returns {Promise<string>} 成功的地址
+ */
+async function fetchFirstAvailable(urls) {
+  let lastError = null
+  for (const url of urls) {
+    try {
+      const resp = await fetch(url)
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`)
+      return url
+    } catch (e) {
+      lastError = e
+    }
+  }
+  throw lastError || new Error('所有候选地址均不可用')
+}
+
+/**
+ * 探测可用的 CDN 源并更新 pdf.js 全局配置
+ * 首个源可用时立即返回，不产生额外请求
+ */
+export async function ensureCdnAvailable() {
+  try {
+    const base = await fetchFirstAvailable(CDN_BASES.map(b => `${b}/package.json`))
+    const resolved = base.replace(/\/package\.json$/, '')
+    // @ts-expect-error pdfjs-dist 类型未包含 cMapUrl
+    pdfjsLib.GlobalWorkerOptions.cMapUrl = `${resolved}/cmaps/`
+    // @ts-expect-error pdfjs-dist 类型未包含 standardFontDataUrl
+    pdfjsLib.GlobalWorkerOptions.standardFontDataUrl = `${resolved}/standard_fonts/`
+    return resolved
+  } catch (e) {
+    console.warn('[FileCut] 所有 CDN 源均不可用，PDF 字体资源可能加载失败:', e?.message || e)
+    return null
+  }
+}
 
 /**
  * 加载PDF文档
@@ -40,7 +84,9 @@ export async function loadPdf(source, options = {}) {
     data,
     password: options.password,
     cMapPacked: true,
+    // @ts-expect-error pdfjs-dist 类型未包含 cMapUrl
     cMapUrl: pdfjsLib.GlobalWorkerOptions.cMapUrl,
+    // @ts-expect-error pdfjs-dist 类型未包含 standardFontDataUrl
     standardFontDataUrl: pdfjsLib.GlobalWorkerOptions.standardFontDataUrl,
     disableAutoFetch: false,
     disableStream: false,

@@ -112,9 +112,9 @@ async function process() {
           <span class="merge-idx">{{ idx + 1 }}</span>
           <span class="file-icon">📕</span>
           <span class="file-name">{{ f.name }}</span>
-          <button class="nb-btn sm" @click="moveUp(idx)" :disabled="idx === 0">↑</button>
-          <button class="nb-btn sm" @click="moveDown(idx)" :disabled="idx === files.length - 1">↓</button>
-          <button class="file-remove" @click="removeFile(idx)">×</button>
+          <button class="nb-btn sm" @click="moveUp(idx)" :disabled="idx === 0" aria-label="上移">↑</button>
+          <button class="nb-btn sm" @click="moveDown(idx)" :disabled="idx === files.length - 1" aria-label="下移">↓</button>
+          <button class="file-remove" @click="removeFile(idx)" aria-label="移除">×</button>
         </div>
       </div>
     </div>

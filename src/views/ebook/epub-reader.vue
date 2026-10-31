@@ -237,7 +237,7 @@ onBeforeUnmount(() => {
         <aside v-if="showToc" class="toc-panel">
           <div class="toc-header">
             <strong>目录</strong>
-            <button class="nb-btn sm" @click="showToc = false">×</button>
+            <button class="nb-btn sm" @click="showToc = false" aria-label="关闭目录">×</button>
           </div>
           <div class="toc-list">
             <a v-for="(item, i) in tocFlat" :key="i"

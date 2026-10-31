@@ -4,7 +4,7 @@
  * 用 pdf-lib 生成PDF，注意大文件分批处理
  */
 import { ref, computed } from 'vue'
-import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
+import { PDFDocument, StandardFonts, rgb } from '../../utils/pdflib.js'
 import ToolLayout from '../../components/ToolLayout.vue'
 import FileDrop from '../../components/FileDrop.vue'
 import ResultViewer from '../../components/ResultViewer.vue'
@@ -270,16 +270,9 @@ function wrapText(text, font, size, maxWidth) {
 </template>
 
 <style scoped>
-.file-meta { color: var(--ink-soft); font-size: 12px; }
 .opt-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 12px;
-}
-.progress-label {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  margin-top: 6px;
-  color: var(--ink-soft);
 }
 </style>

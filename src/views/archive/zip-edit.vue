@@ -238,7 +238,7 @@ const dirtyCount = computed(() =>
               ✎ 编辑
             </button>
             <button v-if="!e.dir" class="nb-btn sm" @click="renameEntry(i)">✎ 重命名</button>
-            <button class="nb-btn sm danger" @click="deleteEntry(i)">×</button>
+            <button class="nb-btn sm danger" @click="deleteEntry(i)" aria-label="删除条目">×</button>
           </span>
         </div>
       </div>
@@ -274,7 +274,6 @@ const dirtyCount = computed(() =>
 </template>
 
 <style scoped>
-.file-meta { color: var(--ink-soft); font-size: 12px; }
 .password-input { display: flex; gap: 8px; align-items: center; }
 .password-input .nb-input { flex: 1; }
 .toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }

@@ -1,31 +1,9 @@
 <script setup>
 import { useSchemaOrg } from '../../composables/useSchemaOrg.js'
+import { guideStudentFileWorkflowFaqs as faqs } from '../../data/faqs.js'
 
 const pageUrl = 'https://filecut.pages.dev/guide/student-file-workflow'
 const publishedDate = '2026-07-30'
-
-const faqs = [
-  {
-    question: '学生党最常用的文件处理场景有哪些？',
-    answer: '最常见的场景包括：PDF 论文转 Word 修改、PPT 课件转图片分享到班级群、Excel 成绩表转 CSV 导入系统、图片压缩后提交作业、批量重命名整理资料、PDF 合并提交作品集、Word 隐私清理去除作者信息。'
-  },
-  {
-    question: '论文 PDF 转 Word 后格式乱了怎么办？',
-    answer: '论文通常包含公式、图表、脚注和特殊字体，转换后轻微错位是正常的。建议：1）优先使用原生电子 PDF 转换；2）转换后用 Word 的「样式」功能统一调整标题和正文；3）公式和复杂图表建议手动校对或重新插入；4）使用 FileCut 本地转换保护论文内容不外泄。'
-  },
-  {
-    question: '如何把 PPT 课件转成图片发给学生？',
-    answer: '使用 FileCut 的 <a href="/ppt/ppt-to-image" class="inline-link">PPT 转图片</a> 工具，可以将每一页 PPT 导出为高清 PNG/JPG。也可以导出为图片合集 PDF，方便在微信、钉钉、邮件中分享。所有处理在本地完成，课件内容不会上传到第三方平台。'
-  },
-  {
-    question: '提交作业前图片太大怎么办？',
-    answer: '使用 <a href="/image/image-compress" class="inline-link">图片压缩</a> 或 <a href="/image/image-batch-compress" class="inline-link">批量图片压缩</a> 工具。可以设置目标文件大小或压缩质量，支持 JPEG、PNG、WebP 输出。作业截图、实验照片、证件照都可以快速压缩到平台要求的大小。'
-  },
-  {
-    question: '老师发下来的 Word 文档怎么去除作者信息？',
-    answer: '使用 <a href="/word/word-clean" class="inline-link">Word 隐私清理</a> 工具，可以删除文档中的作者名、修订记录、批注、隐藏文本和元数据。这在提交作业或共享文档时尤为重要，避免暴露个人隐私或编辑历史。'
-  }
-]
 
 const articleSchema = {
   '@context': 'https://schema.org',

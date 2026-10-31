@@ -95,13 +95,38 @@ describe('pdflib.js - embedChineseFont', () => {
     const { embedChineseFont: embed } = await import('../../src/utils/pdflib.js')
     const doc = await createPdf()
     const embedFont = vi.spyOn(doc, 'embedFont').mockResolvedValue({ mocked: true })
-    const fetchMock = vi.fn(async () => ({ arrayBuffer: async () => new Uint8Array([1, 2, 3]).buffer }))
+    const fetchMock = vi.fn(async () => ({ ok: true, arrayBuffer: async () => new Uint8Array([1, 2, 3]).buffer }))
     vi.stubGlobal('fetch', fetchMock)
 
     await embed(doc)
     expect(fetchMock).toHaveBeenCalledTimes(1)
     expect(fetchMock.mock.calls[0][0]).toContain('source-han-sans')
     expect(embedFont).toHaveBeenCalledWith(expect.anything(), { subset: true })
+  })
+
+  it('首选源失败时回退到下一个 CDN', async () => {
+    vi.resetModules()
+    const { embedChineseFont: embed } = await import('../../src/utils/pdflib.js')
+    const doc = await createPdf()
+    vi.spyOn(doc, 'embedFont').mockResolvedValue({ mocked: true })
+    const fetchMock = vi.fn(async (url) => {
+      if (url.includes('jsdelivr')) throw new Error('blocked')
+      return { ok: true, arrayBuffer: async () => new Uint8Array([1, 2, 3]).buffer }
+    })
+    vi.stubGlobal('fetch', fetchMock)
+
+    await embed(doc)
+    expect(fetchMock.mock.calls.length).toBeGreaterThan(1)
+    expect(fetchMock.mock.calls[1][0]).toContain('unpkg')
+  })
+
+  it('所有源均失败时抛出最后一个错误', async () => {
+    vi.resetModules()
+    const { embedChineseFont: embed } = await import('../../src/utils/pdflib.js')
+    const doc = await createPdf()
+    vi.spyOn(doc, 'embedFont').mockResolvedValue({ mocked: true })
+    vi.stubGlobal('fetch', vi.fn(async () => { throw new Error('network down') }))
+    await expect(embed(doc)).rejects.toThrow('network down')
   })
 
   it('网络失败时抛出异常', async () => {
@@ -118,11 +143,27 @@ describe('pdflib.js - embedChineseFont', () => {
     const { embedChineseFont: embed } = await import('../../src/utils/pdflib.js')
     const doc = await createPdf()
     vi.spyOn(doc, 'embedFont').mockResolvedValue({ mocked: true })
-    const fetchMock = vi.fn(async () => ({ arrayBuffer: async () => new Uint8Array([1, 2, 3]).buffer }))
+    const fetchMock = vi.fn(async () => ({ ok: true, arrayBuffer: async () => new Uint8Array([1, 2, 3]).buffer }))
     vi.stubGlobal('fetch', fetchMock)
 
     await embed(doc)
     await embed(doc)
     expect(fetchMock).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('pdflib.js - fontkit 注册', () => {
+  afterEach(() => vi.restoreAllMocks())
+
+  it('createPdf 已注册 fontkit', async () => {
+    const doc = await createPdf()
+    expect(typeof doc.registerFontkit).toBe('function')
+  })
+
+  it('registerFontkit 重复调用不抛错', async () => {
+    const { registerFontkit } = await import('../../src/utils/pdflib.js')
+    const doc = await createPdf()
+    expect(() => registerFontkit(doc)).not.toThrow()
+    expect(() => registerFontkit(doc)).not.toThrow()
   })
 })

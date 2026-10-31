@@ -13,7 +13,7 @@ import { readFileAsArrayBuffer } from '../../utils/fileReader.js'
 import { replaceExt } from '../../utils/download.js'
 import JSZip from 'jszip'
 import html2canvas from 'html2canvas'
-import { PDFDocument } from 'pdf-lib'
+import { PDFDocument } from '../../utils/pdflib.js'
 
 const file = ref(null)
 const result = ref([])
