@@ -6,7 +6,7 @@
  * 2. 修改已签名PDF会破坏签名 - 警告用户
  * 3. 加密文档需先解密
  */
-import { PDFDocument, fonts, rgb, degrees, StandardFonts } from 'pdf-lib'
+import { PDFDocument, rgb, degrees, StandardFonts } from 'pdf-lib'
 
 /**
  * 加载已有PDF

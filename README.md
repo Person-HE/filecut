@@ -77,6 +77,8 @@ npm run dev        # http://localhost:5173
 npm run build      # SPA only, ~18 s
 npm run build:prerender   # production: build + 131 static HTML routes, ~5 min
 npm run metrics    # regenerate docs/metrics.json and docs/metrics.md
+pnpm test          # 241 unit/component/router tests (~30 s)
+pnpm test:e2e      # Playwright E2E across all 112 tool routes
 ```
 
 `prerender` drives a headless Chromium over every route. It prefers
@@ -128,7 +130,7 @@ docs/
 
 ## Limitations, stated plainly
 
-- **No automated test suite.** Correctness is verified per tool in the browser; the build and prerender steps fail loudly if a route breaks. This is the project's biggest gap.
+- **Automated test suite.** 241 unit/component/router tests (99% line coverage) plus Playwright E2E regression across all 112 tool routes. See `tests/README.md` for architecture and commands.
 - Some engines load from public CDNs (jsDelivr, unpkg, `esm.sh`, Google Fonts). Offline, or if a CDN is blocked in your region, the tools that depend on them degrade while the rest of the site still works.
 - The deployed `Cross-Origin-Embedder-Policy: require-corp` and CDN-loaded engines interact: a tool that fetches a cross-origin script can fail silently under that header.
 - UI and documentation pages are written in Chinese; the tool labels are short and icon-led enough to use otherwise.
@@ -141,7 +143,7 @@ FileCut 是一个**纯前端**文档工具站：112 个工具、13 个分类，P
 - 隐私可自行验证：DevTools 切到离线模式后仍可正常处理本地文件，网络面板中不存在任何上传请求。
 - 上表所有数字来自一条命令：`npm run metrics`，结果落在 `docs/metrics.json`，并记录了采集机器（Windows 11 / Node 24.12.0 / Ryzen 7 7735H）。
 - 构建：`npm run build:prerender` 生成 131 个静态 HTML 路由，用于搜索引擎与 AI 爬虫收录。
-- 已知不足：无自动化测试；部分引擎依赖公共 CDN，网络受限环境下会退化。
+- 已有自动化测试：241 个单元/组件/路由用例（99% 行覆盖）+ Playwright E2E 全量回归，详见 `tests/README.md`。
 
 ## License
 

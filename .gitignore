@@ -34,3 +34,9 @@ vite.log
 *.png
 !public/**/*.png
 小程序可行性尽调报告.html
+
+# 测试产物
+playwright-report/
+test-results/
+coverage/
+.playwright-mcp/
