@@ -8,6 +8,7 @@
  * - 友好的错误提示
  */
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   accept: { type: String, default: '*' },           // 接受的文件类型 '.pdf,application/pdf'
@@ -19,6 +20,7 @@ const props = defineProps({
 
 const emit = defineEmits(['select', 'error'])
 
+const { t } = useI18n()
 const inputRef = ref()
 const isDragover = ref(false)
 
@@ -39,7 +41,7 @@ function onPick(e) {
 function handleFiles(files) {
   if (!files.length) return
   if (!props.multiple && files.length > 1) {
-    emit('error', '只能选择一个文件')
+    emit('error', t('common.oneFileOnly'))
     return
   }
 
@@ -59,14 +61,14 @@ function handleFiles(files) {
         return mime === ext
       })
       if (!ok) {
-        emit('error', `文件 "${f.name}" 的类型不被支持`)
+        emit('error', t('common.notSupported', { name: f.name }))
         continue
       }
     }
     // 大小校验
     if (props.maxSize > 0 && f.size > props.maxSize) {
       const mb = (props.maxSize / 1024 / 1024).toFixed(0)
-      emit('error', `文件 "${f.name}" 超过最大限制 ${mb}MB`)
+      emit('error', t('common.tooLarge', { name: f.name, max: mb }))
       continue
     }
     valid.push(f)
@@ -91,9 +93,7 @@ function onDragleave() { isDragover.value = false }
            style="display:none"
            @change="onPick" />
     <div class="drop-zone-icon">{{ icon }}</div>
-    <div class="drop-zone-title">
-      <strong>点击选择</strong> 或 <strong>拖拽文件到此处</strong>
-    </div>
+    <div class="drop-zone-title">{{ t('fileDrop.clickOrDrop') }}</div>
     <div v-if="hint" class="drop-zone-hint">{{ hint }}</div>
   </div>
 </template>

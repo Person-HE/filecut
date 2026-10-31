@@ -3,12 +3,15 @@
  * 通用文件列表 - 显示已添加的文件，支持删除
  */
 import { formatBytes } from '../utils/format'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   files: { type: Array, default: () => [] },
   showSize: { type: Boolean, default: true }
 })
 const emit = defineEmits(['remove'])
+
+const { t } = useI18n()
 
 function icon(f) {
   const ext = (f.name.split('.').pop() || '').toLowerCase()
@@ -27,7 +30,7 @@ function icon(f) {
       <span class="file-icon">{{ icon(f) }}</span>
       <span class="file-name" :title="f.name">{{ f.name }}</span>
       <span v-if="showSize" class="file-size">{{ formatBytes(f.size) }}</span>
-      <button class="file-remove" @click="emit('remove', idx)" title="移除" aria-label="移除">×</button>
+      <button class="file-remove" @click="emit('remove', idx)" :title="t('common.remove')" :aria-label="t('common.remove')">×</button>
     </div>
   </div>
 </template>

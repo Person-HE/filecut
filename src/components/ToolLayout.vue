@@ -7,6 +7,8 @@
  */
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { categoryNames, toolNames, toolDescs } from '../i18n/toolNames'
 
 const props = defineProps({
   title: String,
@@ -15,29 +17,47 @@ const props = defineProps({
 })
 
 const route = useRoute()
-const categoryName = computed(() => route.meta?.categoryName || '')
+const { t, locale } = useI18n()
+const isEn = computed(() => locale.value === 'en-US')
+
+const categoryName = computed(() => {
+  const id = route.meta?.category
+  if (isEn.value && id && categoryNames[id]) return categoryNames[id]
+  return route.meta?.categoryName || ''
+})
+
+// 英文环境下用映射表替换中文标题与描述，避免逐个修改 112 个工具页面
+const displayTitle = computed(() => {
+  if (isEn.value && route.meta?.toolId) return toolNames[route.meta.toolId] || props.title
+  return props.title
+})
+
+const displayDesc = computed(() => {
+  if (isEn.value && route.meta?.toolId) return toolDescs[route.meta.toolId] || props.desc
+  return props.desc
+})
 </script>
 
 <template>
   <div class="tool-page">
     <div class="privacy-banner nb-alert success">
       <span class="banner-icon">🔒</span>
-      <span>100% 浏览器本地处理 · 文件永不上传 · 处理完即销毁</span>
+      <span>{{ t('toolLayout.privacy') }}</span>
     </div>
 
     <header class="tool-header">
       <div class="breadcrumb">
-        <a href="/">首页</a>
+        <a href="/">{{ t('toolLayout.breadcrumbHome') }}</a>
         <span> / </span>
         <a :href="`/category/${route.meta?.category}`">{{ categoryName }}</a>
         <span> / </span>
-        <span class="current">{{ title }}</span>
+        <span class="current">{{ displayTitle }}</span>
       </div>
       <h1>
         <span v-if="icon" class="title-icon">{{ icon }}</span>
-        {{ title }}
+        {{ displayTitle }}
       </h1>
-      <p v-if="desc" class="desc">{{ desc }}</p>
+      <p v-if="displayDesc" class="desc">{{ displayDesc }}</p>
     </header>
 
     <div class="tool-content">

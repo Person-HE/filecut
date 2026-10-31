@@ -1,6 +1,9 @@
 <script setup>
 import { RouterView } from 'vue-router'
 import TopNav from './components/TopNav.vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 </script>
 
 <template>
@@ -16,9 +19,9 @@ import TopNav from './components/TopNav.vue'
     <footer class="app-footer">
       <div class="footer-inner">
         <a href="/" class="footer-brand">FileCut</a>
-        <span class="footer-meta">·  100% 浏览器本地处理 · 文件永不上传 · 零限制</span>
-        <span class="footer-meta">· 处理即销毁 · 无服务器留存</span>
-        <span class="footer-meta">· <a href="/about">关于我们</a> · <a href="/guide/pdf-to-word">使用指南</a></span>
+        <span class="footer-meta">· {{ t('footer.privacy') }}</span>
+        <span class="footer-meta">· {{ t('footer.noServer') }}</span>
+        <span class="footer-meta">· <a href="/about">{{ t('footer.about') }}</a> · <a href="/guide/pdf-to-word">{{ t('footer.guide') }}</a></span>
       </div>
     </footer>
   </div>

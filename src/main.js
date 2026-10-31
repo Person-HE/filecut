@@ -1,7 +1,9 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+import i18n from './i18n'
 import './styles/main.css'
+import './styles/themes.css'
 import './styles/components.css'
 import { installObjectURLTracker, releaseAllObjectURLs } from './utils/objectUrls.js'
 
@@ -17,7 +19,7 @@ app.config.errorHandler = (err, instance, info) => {
   console.error('[FileCut] 未捕获错误:', err, info)
 }
 
-app.use(router).mount('#app')
+app.use(router).use(i18n).mount('#app')
 
 // 兜底捕获 Promise 中未处理的 rejection
 window.addEventListener('unhandledrejection', (e) => {

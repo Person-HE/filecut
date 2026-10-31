@@ -1,12 +1,39 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { categories } from '../router/categories'
+import { useTheme } from '../composables/useTheme'
+import { useLocale } from '../composables/useLocale'
+import { categoryNames, categoryIcons, toolNames } from '../i18n/toolNames'
 
 const router = useRouter()
 const route = useRoute()
+const { t, locale } = useI18n()
+const { currentTheme, cycleTheme, themes } = useTheme()
+const { currentLocale, toggleLocale, labels } = useLocale()
 const mobileOpen = ref(false)
 const searchQuery = ref('')
+
+function tCategory(id) {
+  return locale.value === 'en-US' ? categoryNames[id] || id : null
+}
+
+function tTool(id) {
+  return locale.value === 'en-US' ? toolNames[id] || id : null
+}
+
+function getCatLabel(cat) {
+  return tCategory(cat.id) || cat.name
+}
+
+function getCatIcon(cat) {
+  return categoryIcons[cat.id] || cat.icon
+}
+
+function getToolLabel(tool) {
+  return tTool(tool.id) || tool.title
+}
 
 const searchResults = computed(() => {
   const q = searchQuery.value.trim().toLowerCase()
@@ -14,8 +41,11 @@ const searchResults = computed(() => {
   const results = []
   for (const cat of categories) {
     for (const tool of cat.tools) {
-      if (tool.title.toLowerCase().includes(q) || tool.keywords.toLowerCase().includes(q)) {
-        results.push({ ...tool, category: cat.id, categoryName: cat.name })
+      const titleZh = tool.title.toLowerCase()
+      const titleEn = (toolNames[tool.id] || '').toLowerCase()
+      const keywords = tool.keywords.toLowerCase()
+      if (titleZh.includes(q) || titleEn.includes(q) || keywords.includes(q)) {
+        results.push({ ...tool, category: cat.id, categoryName: getCatLabel(cat) })
       }
     }
   }
@@ -35,11 +65,11 @@ function go(path) {
       <a class="brand" @click="go('/')">
         <span class="brand-mark">FC</span>
         <span class="brand-name">FileCut</span>
-        <span class="brand-tag">本地 · 零上传</span>
+        <span class="brand-tag">{{ t('nav.brandTag') }}</span>
       </a>
 
       <button class="mobile-toggle nb-btn sm" @click="mobileOpen = !mobileOpen">
-        {{ mobileOpen ? '关闭' : '菜单' }}
+        {{ mobileOpen ? t('nav.close') : t('nav.menu') }}
       </button>
 
       <nav class="nav-cats" :class="{ open: mobileOpen }">
@@ -47,19 +77,28 @@ function go(path) {
            @click="go(`/category/${cat.id}`)"
            class="nav-cat"
            :class="{ active: route.path === `/category/${cat.id}` }">
-          <span class="nav-cat-icon">{{ cat.icon }}</span>
-          <span class="nav-cat-name">{{ cat.name }}</span>
+          <span class="nav-cat-icon">{{ getCatIcon(cat) }}</span>
+          <span class="nav-cat-name">{{ getCatLabel(cat) }}</span>
         </a>
       </nav>
 
       <div class="search-box">
-        <input v-model="searchQuery" class="nb-input" placeholder="搜索工具..." />
+        <input v-model="searchQuery" class="nb-input" :placeholder="t('nav.search')" />
         <div v-if="searchResults.length" class="search-results nb-card flat">
           <a v-for="r in searchResults" :key="r.path" class="search-item" @click="go(r.path)">
-            <span class="search-item-title">{{ r.title }}</span>
+            <span class="search-item-title">{{ getToolLabel(r) }}</span>
             <span class="search-item-cat">{{ r.categoryName }}</span>
           </a>
         </div>
+      </div>
+
+      <div class="topnav-controls">
+        <button class="nb-btn sm" @click="cycleTheme" :title="t('nav.theme')" :aria-label="t('nav.theme')">
+          {{ currentTheme === 'paper' ? '📜' : currentTheme === 'ink' ? '🌑' : currentTheme === 'midnight' ? '🌃' : '⚫' }}
+        </button>
+        <button class="nb-btn sm lang-btn" @click="toggleLocale" :title="t('nav.language')" :aria-label="t('nav.language')">
+          {{ labels[currentLocale] }}
+        </button>
       </div>
     </div>
   </header>
@@ -71,8 +110,8 @@ function go(path) {
   top: 0;
   z-index: 100;
   background: var(--paper-card);
-  border-bottom: 4px solid var(--ink);
-  box-shadow: 0 4px 0 rgba(0,0,0,0.05);
+  border-bottom: var(--border-w-thick) solid var(--ink);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.05);
 }
 .topnav-inner {
   max-width: 1280px;
@@ -101,8 +140,8 @@ function go(path) {
   font-family: var(--font-mono);
   font-weight: 700;
   font-size: 16px;
-  border: 3px solid var(--ink);
-  box-shadow: 3px 3px 0 var(--accent);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-sm);
 }
 .brand-name {
   font-family: var(--font-display);
@@ -129,74 +168,93 @@ function go(path) {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 6px 10px;
+  padding: 4px 10px;
   font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
   cursor: pointer;
   border: 2px solid transparent;
   transition: all 0.1s ease;
-  white-space: nowrap;
 }
 .nav-cat:hover {
-  border-color: var(--ink);
   background: var(--paper-darker);
+  border-color: var(--ink);
 }
 .nav-cat.active {
-  background: var(--ink);
-  color: var(--paper-card);
+  background: var(--neon);
+  border-color: var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
 }
-.nav-cat-icon { font-size: 14px; }
+.nav-cat-icon {
+  font-size: 14px;
+  line-height: 1;
+}
 .search-box {
   position: relative;
-  min-width: 200px;
-  flex-shrink: 0;
+  min-width: 160px;
 }
-.search-box .nb-input { padding: 6px 10px; font-size: 13px; }
+.search-box .nb-input {
+  padding: 6px 10px;
+  font-size: 13px;
+}
 .search-results {
   position: absolute;
   top: calc(100% + 4px);
-  left: 0;
   right: 0;
-  max-height: 320px;
+  min-width: 280px;
+  max-height: 400px;
   overflow-y: auto;
   z-index: 200;
-  padding: 4px;
+  padding: 0;
 }
 .search-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 10px;
-  cursor: pointer;
+  padding: 8px 12px;
   font-family: var(--font-mono);
   font-size: 13px;
-  border: 2px solid transparent;
+  cursor: pointer;
+  border-bottom: 1px solid var(--paper-darker);
+  transition: background 0.1s ease;
 }
 .search-item:hover {
-  background: var(--accent-soft);
-  border-color: var(--ink);
+  background: var(--neon);
+}
+.search-item:last-child {
+  border-bottom: none;
+}
+.search-item-title {
+  color: var(--ink);
+  font-weight: 500;
 }
 .search-item-cat {
+  color: var(--ink-muted);
   font-size: 11px;
-  color: var(--ink-soft);
 }
-.mobile-toggle { display: none; }
 
-@media (max-width: 968px) {
+.topnav-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.lang-btn {
+  font-family: var(--font-mono);
+  min-width: 48px;
+}
+
+.mobile-toggle {
+  display: none;
+}
+
+@media (max-width: 900px) {
   .topnav-inner { gap: 12px; }
-  .brand-tag { display: none; }
   .mobile-toggle { display: inline-flex; }
-  .nav-cats {
-    display: none;
-    width: 100%;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 4px;
-    padding-top: 8px;
-  }
-  .nav-cats.open { display: flex; }
-  .nav-cat { width: 100%; }
-  .search-box { width: 100%; min-width: 0; }
+  .nav-cats { display: none; }
+  .nav-cats.open { display: flex; width: 100%; }
+  .search-box { flex: 1; min-width: 120px; }
 }
 </style>

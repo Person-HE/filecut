@@ -1,0 +1,53 @@
+/**
+ * 主题管理 composable
+ * - 4 套皮肤：paper / ink / midnight / contrast
+ * - 持久化到 localStorage
+ * - 默认跟随系统 prefers-color-scheme（暗色用 ink）
+ */
+import { ref, watch } from 'vue'
+
+export const THEMES = [
+  { id: 'paper', label: '纸质', icon: '📜', desc: '默认米黄' },
+  { id: 'ink', label: '墨黑', icon: '🌑', desc: '暗色模式' },
+  { id: 'midnight', label: '深夜', icon: '🌃', desc: '工程蓝' },
+  { id: 'contrast', label: '高对比', icon: '⚫', desc: '无障碍' }
+]
+
+const STORAGE_KEY = 'filecut-theme'
+
+function detectInitial() {
+  const saved = localStorage.getItem(STORAGE_KEY)
+  if (saved && THEMES.some(t => t.id === saved)) return saved
+  if (window.matchMedia?.('(prefers-color-scheme: dark)').matches) return 'ink'
+  return 'paper'
+}
+
+const currentTheme = ref(detectInitial())
+
+function applyTheme(id) {
+  document.documentElement.setAttribute('data-theme', id)
+}
+
+if (typeof document !== 'undefined') {
+  applyTheme(currentTheme.value)
+}
+
+watch(currentTheme, (id) => {
+  localStorage.setItem(STORAGE_KEY, id)
+  applyTheme(id)
+})
+
+export function useTheme() {
+  function setTheme(id) {
+    const exists = THEMES.some(t => t.id === id)
+    if (exists) currentTheme.value = id
+  }
+
+  function cycleTheme() {
+    const idx = THEMES.findIndex(t => t.id === currentTheme.value)
+    const next = THEMES[(idx + 1) % THEMES.length]
+    currentTheme.value = next.id
+  }
+
+  return { currentTheme, setTheme, cycleTheme, themes: THEMES }
+}
