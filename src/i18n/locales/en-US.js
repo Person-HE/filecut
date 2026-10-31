@@ -50,8 +50,8 @@ export default {
   },
   themes: {
     paper: 'Paper',
-    ink: 'Ink',
-    midnight: 'Midnight',
-    contrast: 'High Contrast'
+    fresh: 'Fresh',
+    tech: 'Tech',
+    aurora: 'Aurora'
   }
 }

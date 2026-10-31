@@ -94,7 +94,7 @@ function go(path) {
 
       <div class="topnav-controls">
         <button class="nb-btn sm" @click="cycleTheme" :title="t('nav.theme')" :aria-label="t('nav.theme')">
-          {{ currentTheme === 'paper' ? '📜' : currentTheme === 'ink' ? '🌑' : currentTheme === 'midnight' ? '🌃' : '⚫' }}
+          {{ currentTheme === 'paper' ? '📜' : currentTheme === 'fresh' ? '🌤' : currentTheme === 'tech' ? '🌃' : '🌌' }}
         </button>
         <button class="nb-btn sm lang-btn" @click="toggleLocale" :title="t('nav.language')" :aria-label="t('nav.language')">
           {{ labels[currentLocale] }}

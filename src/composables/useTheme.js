@@ -8,9 +8,9 @@ import { ref, watch } from 'vue'
 
 export const THEMES = [
   { id: 'paper', label: '纸质', icon: '📜', desc: '默认米黄' },
-  { id: 'ink', label: '墨黑', icon: '🌑', desc: '暗色模式' },
-  { id: 'midnight', label: '深夜', icon: '🌃', desc: '工程蓝' },
-  { id: 'contrast', label: '高对比', icon: '⚫', desc: '无障碍' }
+  { id: 'fresh', label: '清爽', icon: '🌤', desc: '清新蓝白' },
+  { id: 'tech', label: '科技', icon: '🌃', desc: '霓虹代码' },
+  { id: 'aurora', label: '极光', icon: '🌌', desc: '柔和科技' }
 ]
 
 const STORAGE_KEY = 'filecut-theme'

@@ -50,8 +50,8 @@ export default {
   },
   themes: {
     paper: '纸质',
-    ink: '墨黑',
-    midnight: '深夜',
-    contrast: '高对比'
+    fresh: '清爽',
+    tech: '科技',
+    aurora: '极光'
   }
 }
