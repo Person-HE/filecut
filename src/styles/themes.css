@@ -1,9 +1,47 @@
 /* =========================================================================
    FileCut · 主题系统
    通过 [data-theme] 属性切换 CSS 变量实现整站换肤
+
+   主题来源：
+   - paper   · FileCut 原生 Neobrutalism 纸质主题（默认）
+   - 其余全部来自 DaisyUI 内置主题，通过桥接层复用其色彩系统
    ========================================================================= */
 
-/* ---------- paper · 默认纸质米黄（原主题） ---------- */
+/* ---------- 桥接层：把 DaisyUI 主题变量映射为 FileCut 令牌 ---------- */
+:root[data-theme]:not([data-theme="paper"]) {
+  --paper-bg: var(--color-base-200);
+  --paper-card: var(--color-base-100);
+  --paper-darker: var(--color-base-300);
+
+  --ink: var(--color-base-content);
+  --ink-soft: color-mix(in oklab, var(--color-base-content) 72%, var(--color-base-100));
+  --ink-muted: color-mix(in oklab, var(--color-base-content) 52%, var(--color-base-100));
+
+  --accent: var(--color-primary);
+  --accent-deep: color-mix(in oklab, var(--color-primary) 82%, var(--color-base-content));
+  --accent-soft: color-mix(in oklab, var(--color-primary) 18%, var(--color-base-100));
+  --neon: var(--color-secondary);
+  --neon-deep: color-mix(in oklab, var(--color-secondary) 82%, var(--color-base-content));
+  --cyan: var(--color-accent);
+  --warning: var(--color-warning);
+  --danger: var(--color-error);
+
+  --border-w: var(--border);
+  --border-w-thick: calc(var(--border) + 1px);
+
+  --shadow-sm: 0 2px 6px color-mix(in oklab, var(--color-base-content) 14%, transparent);
+  --shadow-md: 0 4px 14px color-mix(in oklab, var(--color-base-content) 18%, transparent);
+  --shadow-lg: 0 10px 30px color-mix(in oklab, var(--color-base-content) 22%, transparent);
+  --shadow-pressed: 0 1px 3px color-mix(in oklab, var(--color-base-content) 12%, transparent);
+
+  --noise-light: transparent;
+  --noise-dark: transparent;
+
+  --radius: var(--radius-box);
+  --font-accent: var(--font-mono);
+}
+
+/* ---------- paper · 默认纸质米黄（FileCut 原生主题） ---------- */
 :root,
 [data-theme="paper"] {
   --paper-bg: #f4ecd8;
@@ -34,104 +72,5 @@
   --noise-dark: rgba(0, 0, 0, 0.03);
 
   --radius: 0px;
-  --font-accent: var(--font-mono);
-}
-
-/* ---------- fresh · 清爽（浅蓝 + 白色 + 圆角） ---------- */
-[data-theme="fresh"] {
-  --paper-bg: #f0f7ff;
-  --paper-card: #ffffff;
-  --paper-darker: #e8f0f8;
-
-  --ink: #1e293b;
-  --ink-soft: #64748b;
-  --ink-muted: #94a3b8;
-
-  --accent: #3b82f6;
-  --accent-deep: #2563eb;
-  --accent-soft: #dbeafe;
-  --neon: #06b6d4;
-  --neon-deep: #0891b2;
-  --cyan: #14b8a6;
-  --warning: #f59e0b;
-  --danger: #ef4444;
-
-  --border-w: 2px;
-  --border-w-thick: 3px;
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
-  --shadow-pressed: 0 1px 4px rgba(0, 0, 0, 0.06);
-
-  --noise-light: transparent;
-  --noise-dark: transparent;
-
-  --radius: 8px;
-  --font-accent: var(--font-mono);
-}
-
-/* ---------- tech · 科技感（深色霓虹 + 代码风） ---------- */
-[data-theme="tech"] {
-  --paper-bg: #0a0e14;
-  --paper-card: #111820;
-  --paper-darker: #1a2332;
-
-  --ink: #e2e8f0;
-  --ink-soft: #94a3b8;
-  --ink-muted: #64748b;
-
-  --accent: #00d4ff;
-  --accent-deep: #0099cc;
-  --accent-soft: #0a2a3a;
-  --neon: #00ff88;
-  --neon-deep: #00cc6a;
-  --cyan: #f472b6;
-  --warning: #fbbf24;
-  --danger: #ff4757;
-
-  --border-w: 1px;
-  --border-w-thick: 2px;
-  --shadow-sm: 0 0 8px rgba(0, 212, 255, 0.15);
-  --shadow-md: 0 0 16px rgba(0, 212, 255, 0.2);
-  --shadow-lg: 0 0 24px rgba(0, 212, 255, 0.25);
-  --shadow-pressed: 0 0 4px rgba(0, 212, 255, 0.1);
-
-  --noise-light: transparent;
-  --noise-dark: transparent;
-
-  --radius: 4px;
-  --font-accent: var(--font-mono);
-}
-
-/* ---------- aurora · 极光（柔和渐变科技风） ---------- */
-[data-theme="aurora"] {
-  --paper-bg: #0c1222;
-  --paper-card: #141d30;
-  --paper-darker: #1a2744;
-
-  --ink: #e8f5e9;
-  --ink-soft: #a5d6a7;
-  --ink-muted: #66bb6a;
-
-  --accent: #4ade80;
-  --accent-deep: #22c55e;
-  --accent-soft: #1a3a2a;
-  --neon: #38bdf8;
-  --neon-deep: #0ea5e9;
-  --cyan: #f472b6;
-  --warning: #fbbf24;
-  --danger: #f87171;
-
-  --border-w: 2px;
-  --border-w-thick: 3px;
-  --shadow-sm: 0 2px 8px rgba(74, 222, 128, 0.15);
-  --shadow-md: 0 4px 16px rgba(74, 222, 128, 0.2);
-  --shadow-lg: 0 8px 32px rgba(74, 222, 128, 0.25);
-  --shadow-pressed: 0 1px 4px rgba(74, 222, 128, 0.1);
-
-  --noise-light: transparent;
-  --noise-dark: transparent;
-
-  --radius: 6px;
   --font-accent: var(--font-mono);
 }

@@ -1,11 +1,12 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import wasm from 'vite-plugin-wasm'
+import tailwindcss from '@tailwindcss/vite'
 
 // Cloudflare Pages 静态部署配置
 // 所有处理在浏览器端完成，零后端依赖
 export default defineConfig({
-  plugins: [vue(), wasm()],
+  plugins: [vue(), wasm(), tailwindcss()],
   base: '/',
   resolve: {
     alias: {
