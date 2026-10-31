@@ -8,7 +8,7 @@
  */
 import { ref } from 'vue'
 import imageCompression from 'browser-image-compression'
-import { PDFDocument } from 'pdf-lib'
+import { PDFDocument } from '../../utils/pdflib.js'
 import * as pako from 'pako'
 import ToolLayout from '../../components/ToolLayout.vue'
 import FileDrop from '../../components/FileDrop.vue'

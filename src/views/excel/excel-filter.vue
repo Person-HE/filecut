@@ -233,7 +233,7 @@ async function exportResult() {
           <span class="nb-tag accent">{{ f.col }}</span>
           <span class="filter-op">{{ f.op }}</span>
           <span class="filter-val">"{{ f.value }}"</span>
-          <button class="nb-btn sm danger" @click="removeFilter(i)">×</button>
+          <button class="nb-btn sm danger" @click="removeFilter(i)" aria-label="删除筛选">×</button>
         </div>
       </div>
     </div>
@@ -255,7 +255,7 @@ async function exportResult() {
         <div v-for="(s, i) in sorts" :key="i" class="filter-item">
           <span class="nb-tag cyan">{{ s.col }}</span>
           <span class="filter-op">{{ s.order === 'asc' ? '↑ 升序' : '↓ 降序' }}</span>
-          <button class="nb-btn sm danger" @click="removeSort(i)">×</button>
+          <button class="nb-btn sm danger" @click="removeSort(i)" aria-label="删除排序">×</button>
         </div>
       </div>
     </div>

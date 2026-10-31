@@ -211,7 +211,6 @@ function extractTextFromChapter(doc) {
 </template>
 
 <style scoped>
-.file-meta { color: var(--ink-soft); font-size: 12px; }
 .options {
   display: flex;
   gap: 16px;
@@ -219,12 +218,6 @@ function extractTextFromChapter(doc) {
   padding: 8px;
   background: var(--paper-bg);
   border: 2px solid var(--ink);
-}
-.progress-label {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  margin-top: 6px;
-  color: var(--ink-soft);
 }
 .stats-grid { display: flex; gap: 8px; flex-wrap: wrap; }
 .preview-box {

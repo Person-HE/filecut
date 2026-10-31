@@ -1,31 +1,9 @@
 <script setup>
 import { useSchemaOrg } from '../../composables/useSchemaOrg.js'
+import { guideImageCompressPrivacyFaqs as faqs } from '../../data/faqs.js'
 
 const pageUrl = 'https://filecut.pages.dev/guide/image-compress-privacy'
 const publishedDate = '2026-07-30'
-
-const faqs = [
-  {
-    question: '在线图片压缩工具会保存我的照片吗？',
-    answer: '大多数在线图片压缩工具会在服务器端处理文件，处理完成后通常会删除，但删除时间、是否保留日志、是否用于模型训练取决于服务商隐私政策。部分免费工具会在用户协议中保留「改进服务」的权利，这意味着你的图片可能被用于算法优化。'
-  },
-  {
-    question: '证件照、合同截图上传到在线工具有什么风险？',
-    answer: '证件照包含人脸、身份证号等生物识别信息；合同截图包含商业条款、签章、甲乙双方信息。这些信息一旦上传到第三方服务器，可能面临：1）服务器被攻击导致数据泄露；2）服务商内部人员访问；3）数据被用于训练 AI 模型或被转卖给第三方。'
-  },
-  {
-    question: '如何在不上传的情况下压缩图片？',
-    answer: '可以使用浏览器本地工具（如 FileCut 图片压缩）、桌面软件（如 Photoshop、GIMP、ImageMagick）或命令行工具（如 cjpeg、pngquant）。浏览器本地工具通过 WebAssembly 在本地运行压缩算法，文件不会离开设备。'
-  },
-  {
-    question: '本地压缩图片的效果和在线工具一样吗？',
-    answer: '对于常见的 JPEG 质量压缩、PNG 量化，本地工具可以达到与在线工具相同甚至更好的效果。FileCut 使用的 browser-image-compression 库支持自定义质量、尺寸和文件类型，对证件照、截图、商品图的压缩效果稳定。'
-  },
-  {
-    question: '压缩后的图片还能恢复原始信息吗？',
-    answer: '有损压缩（如 JPEG）会永久丢失部分像素信息，无法完全恢复原始文件。但 EXIF 元数据（拍摄时间、地点、设备型号）可以在压缩前被剥离，进一步保护隐私。FileCut 提供 EXIF 清理工具，可在压缩前删除这些元数据。'
-  }
-]
 
 const articleSchema = {
   '@context': 'https://schema.org',

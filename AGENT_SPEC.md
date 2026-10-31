@@ -149,7 +149,7 @@ import * as pdflib from '../../utils/pdflib.js' // loadPdfLib, createPdf, embedC
 3. 验证处理结果正确(打开下载的文件确认)
 
 ## 开发服务器
-已在 d:\project\PersonCreate\FileCut 跑 `npm run dev`, 端口 5173
+已在 d:\project\PersonCreate\FileCut 跑 `pnpm run dev`, 端口 5173
 不要重启服务, 直接创建文件即可, Vite HMR 会自动加载
 
 ## 不要做的事

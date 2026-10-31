@@ -1,31 +1,9 @@
 <script setup>
 import { useSchemaOrg } from '../../composables/useSchemaOrg.js'
+import { guideBestFreePdfToolsFaqs as faqs } from '../../data/faqs.js'
 
 const pageUrl = 'https://filecut.pages.dev/guide/best-free-pdf-tools'
 const publishedDate = '2026-07-30'
-
-const faqs = [
-  {
-    question: '2026 年最值得推荐的免费 PDF 工具有哪些？',
-    answer: '根据真实测试，综合实力较强的免费 PDF 工具包括：Adobe Acrobat（在线版）、Smallpdf、iLovePDF、PDF24、迅捷 PDF、万兴 PDF、Sejda、Foxit PDF Reader、Microsoft Word（直接打开 PDF）和 FileCut（本地处理）。选择时需权衡转换质量、隐私保护、使用限制和平台支持。'
-  },
-  {
-    question: '迅捷 PDF 和万兴 PDF 的免费版够用吗？',
-    answer: '迅捷 PDF 和万兴 PDF 的免费版通常有水印、文件大小限制或每日处理次数限制。例如，万兴 PDF 免费版转换后可能添加水印，迅捷 PDF 在线版对单次文件大小有限制。如果需要处理无水印、无大小限制的敏感文档，本地工具更合适。'
-  },
-  {
-    question: '免费 PDF 工具会泄露文件内容吗？',
-    answer: '上传式工具存在潜在风险：文件在传输和服务器处理过程中可能被截获、缓存或分析。本地处理工具（如 PDF24 桌面版、FileCut）文件不离开电脑，隐私风险最低。处理合同、论文、证件等敏感文件时，建议优先选择本地方案。'
-  },
-  {
-    question: 'Smallpdf 和 iLovePDF 哪个更好？',
-    answer: '两者都是海外主流在线 PDF 工具，功能覆盖全面。Smallpdf 的界面更简洁，iLovePDF 的批量处理功能更强大。在中文文档的表格保留方面，两者对简单文档效果接近，复杂表格均可能出现 18-25% 的错位率。两者免费版都有次数和大小限制。'
-  },
-  {
-    question: '为什么还需要 FileCut 这样的本地工具？',
-    answer: 'FileCut 的核心价值是「零上传」和「无限制」。所有解析在浏览器本地完成，不需要注册、没有水印、没有每日限额。对于隐私敏感场景（如合同、财报、身份证、论文），本地处理是更稳妥的选择。'
-  }
-]
 
 const articleSchema = {
   '@context': 'https://schema.org',

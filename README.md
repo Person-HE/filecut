@@ -46,7 +46,7 @@ Engines are loaded on demand per tool: `pdf-lib`, `pdf.js`, SheetJS, `mammoth`, 
 ## Measured, not claimed
 
 All numbers below are produced by one command on this checkout —
-`npm run metrics` → `docs/metrics.json` — and record the machine they came from.
+`pnpm run metrics` → `docs/metrics.json` — and record the machine they came from.
 
 | Metric | Value |
 | --- | --- |
@@ -72,11 +72,14 @@ The 23.4 MB ONNX asset is why the first background-removal run is slow and every
 
 ```bash
 node -v            # 18+ (measured on 24.12.0)
-npm install
-npm run dev        # http://localhost:5173
-npm run build      # SPA only, ~18 s
-npm run build:prerender   # production: build + 131 static HTML routes, ~5 min
-npm run metrics    # regenerate docs/metrics.json and docs/metrics.md
+pnpm -v            # 11+ (declared in package.json packageManager)
+pnpm install
+pnpm run dev        # http://localhost:5173
+pnpm run build      # SPA only, ~18 s
+pnpm run build:prerender   # production: build + 131 static HTML routes, ~5 min
+pnpm run metrics    # regenerate docs/metrics.json and docs/metrics.md
+pnpm test          # 241 unit/component/router tests (~30 s)
+pnpm test:e2e      # Playwright E2E across all 112 tool routes
 ```
 
 `prerender` drives a headless Chromium over every route. It prefers
@@ -89,13 +92,13 @@ Point `PRERENDER_EXECUTABLE_PATH` at a browser to override.
 The site is fully static — but the build you publish matters.
 
 ```bash
-npm run build:prerender                                  # 131 static HTML routes
+pnpm run build:prerender                                  # 131 static HTML routes
 npx wrangler pages deploy dist --project-name filecut    # publish that output
 ```
 
 **Why not Pages' Git integration build:** Cloudflare's build image cannot run the
 prerender step, because `npx playwright install chromium` yields no usable browser
-there. A Git-integrated build of `npm run build` publishes the **SPA shell only** —
+there. A Git-integrated build of `pnpm run build` publishes the **SPA shell only** —
 one HTML document, no per-route pages — which silently removes the whole SEO and
 AI-crawler surface. Verified on this project: the prerendered route tree came back
 404 from a Pages build, and the alias fell to a 6 KB shell instead of the 55 KB
@@ -123,12 +126,12 @@ scripts/
 public/
   _redirects _headers    hosting config consumed by Cloudflare Pages
 docs/
-  metrics.json           machine-readable output of `npm run metrics`
+  metrics.json           machine-readable output of `pnpm run metrics`
 ```
 
 ## Limitations, stated plainly
 
-- **No automated test suite.** Correctness is verified per tool in the browser; the build and prerender steps fail loudly if a route breaks. This is the project's biggest gap.
+- **Automated test suite.** 241 unit/component/router tests (99% line coverage) plus Playwright E2E regression across all 112 tool routes. See `tests/README.md` for architecture and commands.
 - Some engines load from public CDNs (jsDelivr, unpkg, `esm.sh`, Google Fonts). Offline, or if a CDN is blocked in your region, the tools that depend on them degrade while the rest of the site still works.
 - The deployed `Cross-Origin-Embedder-Policy: require-corp` and CDN-loaded engines interact: a tool that fetches a cross-origin script can fail silently under that header.
 - UI and documentation pages are written in Chinese; the tool labels are short and icon-led enough to use otherwise.
@@ -139,9 +142,9 @@ FileCut 是一个**纯前端**文档工具站：112 个工具、13 个分类，P
 
 - 在线使用：<https://filecut.pages.dev>
 - 隐私可自行验证：DevTools 切到离线模式后仍可正常处理本地文件，网络面板中不存在任何上传请求。
-- 上表所有数字来自一条命令：`npm run metrics`，结果落在 `docs/metrics.json`，并记录了采集机器（Windows 11 / Node 24.12.0 / Ryzen 7 7735H）。
-- 构建：`npm run build:prerender` 生成 131 个静态 HTML 路由，用于搜索引擎与 AI 爬虫收录。
-- 已知不足：无自动化测试；部分引擎依赖公共 CDN，网络受限环境下会退化。
+- 上表所有数字来自一条命令：`pnpm run metrics`，结果落在 `docs/metrics.json`，并记录了采集机器（Windows 11 / Node 24.12.0 / Ryzen 7 7735H）。
+- 构建：`pnpm run build:prerender` 生成 131 个静态 HTML 路由，用于搜索引擎与 AI 爬虫收录。
+- 已有自动化测试：241 个单元/组件/路由用例（99% 行覆盖）+ Playwright E2E 全量回归，详见 `tests/README.md`。
 
 ## License
 

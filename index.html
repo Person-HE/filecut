@@ -13,6 +13,15 @@
   <!-- Canonical -->
   <link rel="canonical" href="https://filecut.pages.dev/" />
 
+  <!-- Web 字体 - 预连接 + 异步加载，避免阻塞首屏渲染 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" media="print" onload="this.media='all'"
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" />
+  </noscript>
+
   <!-- Open Graph -->
   <meta property="og:title" content="FileCut · 纯前端文档工具站 · 112 个免费在线文件工具" />
   <meta property="og:description" content="所有处理在浏览器本地完成，文件永不上传、无限制、零依赖。覆盖 PDF/Word/Excel/PPT/图片/音视频/二维码/字体等 112 个工具。" />
@@ -31,6 +40,11 @@
   <!-- Favicon -->
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/favicon.svg" />
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
   <!-- Schema.org: Organization + WebSite + SoftwareApplication -->
   <script type="application/ld+json">

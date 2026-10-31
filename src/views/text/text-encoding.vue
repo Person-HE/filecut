@@ -219,7 +219,6 @@ async function process() {
 </template>
 
 <style scoped>
-.file-meta { color: var(--ink-soft); font-size: 12px; }
 .enc-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));

@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { watch } from 'vue'
 import { categories } from './categories.js'
+import { toolNames, toolDescs } from '../i18n/toolNames'
+import { currentLocale } from '../composables/useLocale'
 
 // 站点基础信息（用于 SEO/GEO）
 const SITE_ORIGIN = 'https://filecut.pages.dev'
@@ -16,8 +19,13 @@ const toolRoutes = categories.flatMap(cat => {
   return cat.tools.map(tool => ({
     path: tool.path,
     name: tool.id,
-    component: () => import(`../views/${cat.id}/${tool.id}.vue`).catch(() => import('../views/PlaceholderTool.vue')),
+    component: () => import(`../views/${cat.id}/${tool.id}.vue`).catch((err) => {
+      // 模块缺失时回退到占位页；其他错误（语法/导入）记录后再回退
+      console.error(`[FileCut] 路由 ${tool.path} 加载失败:`, err?.message || err)
+      return import('../views/PlaceholderTool.vue')
+    }),
     meta: {
+      toolId: tool.id,
       title: `${tool.title} - 免费在线${tool.title}工具 · FileCut`,
       desc: `${tool.desc}。100% 浏览器本地处理，文件不上传，无大小/次数限制，免费使用。`,
       keywords: `${tool.keywords},${tool.title},在线${tool.title},免费`,
@@ -141,12 +149,32 @@ function setLinkRel(rel, href) {
   el.setAttribute('href', href)
 }
 
-router.afterEach((to) => {
-  const title = to.meta?.title || SITE_BRAND
-  const desc = to.meta?.desc || SITE_DESC
-  const keywords = to.meta?.keywords || ''
-  const image = to.meta?.image || `${SITE_ORIGIN}/og-default.png`
-  const canonical = `${SITE_ORIGIN}${to.path}`
+/**
+ * 按当前语言计算 SEO 标题与描述
+ * 英文环境下使用 toolNames / toolDescs 映射
+ */
+function localizedMeta(meta) {
+  const isEn = currentLocale.value === 'en-US'
+  if (!isEn || !meta?.toolId) {
+    return { title: meta?.title || SITE_BRAND, desc: meta?.desc || SITE_DESC, keywords: meta?.keywords || '' }
+  }
+  const enName = toolNames[meta.toolId] || meta.toolId
+  const enDesc = toolDescs[meta.toolId] || ''
+  return {
+    title: `${enName} - Free Online Tool · FileCut`,
+    desc: `${enDesc}. 100% processed in your browser — files are never uploaded, no size or usage limits.`,
+    keywords: `${enName.toLowerCase()},free online tool,filecut`
+  }
+}
+
+/**
+ * 应用 SEO/GEO 元信息到 document
+ * @param {object} route - vue-router 路由对象
+ */
+function applySeoMeta(route) {
+  const { title, desc, keywords } = localizedMeta(route.meta)
+  const image = route.meta?.image || `${SITE_ORIGIN}/og-default.png`
+  const canonical = `${SITE_ORIGIN}${route.path}`
 
   document.title = title
   setMeta('description', desc)
@@ -168,11 +196,20 @@ router.afterEach((to) => {
 
   // Canonical
   setLinkRel('canonical', canonical)
+}
+
+router.afterEach((to) => {
+  applySeoMeta(to)
 
   // 标记路由渲染完成，供预渲染脚本捕获
   if (typeof window !== 'undefined') {
     window.__PRERENDER_READY__ = true
   }
+})
+
+// 切换语言后重新应用 SEO 元信息（无需重新导航）
+watch(currentLocale, () => {
+  applySeoMeta(router.currentRoute.value)
 })
 
 export default router

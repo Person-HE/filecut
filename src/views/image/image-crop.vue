@@ -172,7 +172,7 @@ async function process() {
           <button class="nb-btn sm" @click="flipH" title="水平翻转">⇄</button>
           <button class="nb-btn sm" @click="flipV" title="垂直翻转">⇅</button>
           <button class="nb-btn sm" @click="zoomOut" title="缩小">−</button>
-          <button class="nb-btn sm" @click="zoomIn" title="放大">+</button>
+          <button class="nb-btn sm" @click="zoomIn" title="放大" aria-label="放大">+</button>
           <button class="nb-btn sm" @click="reset" title="重置">⟲</button>
         </div>
       </div>

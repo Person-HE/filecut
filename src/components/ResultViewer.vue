@@ -7,6 +7,7 @@
  * - 文本预览
  */
 import { formatBytes } from '../utils/format'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   // 文件列表 [{ name, blob, url, size, type }]
@@ -18,6 +19,8 @@ const props = defineProps({
   // 自定义内容(slot)
   custom: { type: Boolean, default: false }
 })
+
+const { t } = useI18n()
 
 function icon(name) {
   const ext = (name.split('.').pop() || '').toLowerCase()
@@ -32,7 +35,7 @@ function icon(name) {
 <template>
   <div class="result-area" v-if="files.length || text || imageUrls.length || custom">
     <div class="result-title">
-      <span class="result-mark">✓</span> 处理完成
+      <span class="result-mark">✓</span> {{ t('resultViewer.completed') }}
     </div>
 
     <!-- 自定义内容 -->
@@ -41,9 +44,9 @@ function icon(name) {
     <!-- 图片预览 -->
     <div v-if="imageUrls.length" class="image-previews">
       <div v-for="(url, i) in imageUrls" :key="i" class="image-preview">
-        <img :src="url" :alt="`预览${i+1}`" />
+        <img :src="url" :alt="`${t('resultViewer.previewLabel')}${i+1}`" />
         <a v-if="files[i]" :href="files[i].url" :download="files[i].name" class="nb-btn sm">
-          下载 {{ files[i].name }}
+          {{ t('resultViewer.download') }} {{ files[i].name }}
         </a>
       </div>
     </div>
@@ -54,20 +57,20 @@ function icon(name) {
         <span class="download-icon">{{ icon(f.name) }}</span>
         <span class="download-name">{{ f.name }}</span>
         <span v-if="f.size" class="download-size">{{ formatBytes(f.size) }}</span>
-        <span class="download-btn">下载</span>
+        <span class="download-btn">{{ t('resultViewer.download') }}</span>
       </a>
     </div>
 
     <!-- 单文件下载按钮(大) -->
     <div v-if="files.length === 1 && !imageUrls.length" class="single-download">
       <a :href="files[0].url" :download="files[0].name" class="nb-btn primary lg block">
-        ⬇ 下载 {{ files[0].name }} <span v-if="files[0].size">({{ formatBytes(files[0].size) }})</span>
+        ⬇ {{ t('resultViewer.download') }} {{ files[0].name }} <span v-if="files[0].size">({{ formatBytes(files[0].size) }})</span>
       </a>
     </div>
 
     <!-- 文本预览 -->
     <div v-if="text" class="text-preview">
-      <pre>{{ text.length > 5000 ? text.slice(0, 5000) + '\n\n... (仅显示前5000字符，完整内容已下载)' : text }}</pre>
+      <pre>{{ text.length > 5000 ? text.slice(0, 5000) + t('resultViewer.previewTextTruncated') : text }}</pre>
     </div>
   </div>
 </template>

@@ -185,7 +185,7 @@ async function process() {
           <div v-for="(b, bi) in s.bullets" :key="bi" class="bullet-row">
             <span class="bullet-dot">◆</span>
             <input v-model="s.bullets[bi]" class="nb-input" :placeholder="`要点 ${bi+1}`" />
-            <button class="nb-btn ghost sm" @click="removeBullet(s, bi)">×</button>
+            <button class="nb-btn ghost sm" @click="removeBullet(s, bi)" aria-label="删除要点">×</button>
           </div>
           <button class="nb-btn sm mt-8" @click="addBullet(s)">+ 添加要点</button>
         </div>

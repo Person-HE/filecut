@@ -299,7 +299,6 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-.file-meta { color: var(--ink-soft); font-size: 12px; }
 .video-preview {
   width: 100%;
   max-height: 400px;
@@ -331,11 +330,5 @@ onBeforeUnmount(() => {
   font-weight: 700;
   color: var(--accent-deep);
   box-shadow: var(--shadow-sm);
-}
-.progress-label {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  margin-top: 6px;
-  color: var(--ink-soft);
 }
 </style>

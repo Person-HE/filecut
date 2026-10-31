@@ -6,7 +6,7 @@
  */
 import { ref } from 'vue'
 import JSZip from 'jszip'
-import { PDFDocument } from 'pdf-lib'
+import { PDFDocument } from '../../utils/pdflib.js'
 import exifr from 'exifr'
 import { fileTypeFromBuffer } from 'file-type'
 import ToolLayout from '../../components/ToolLayout.vue'

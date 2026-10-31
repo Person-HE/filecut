@@ -1,32 +1,10 @@
 <script setup>
 import { categories, allTools } from '../router/categories.js'
+import { aboutFaqs as faqs } from '../data/faqs.js'
 import { useSchemaOrg } from '../composables/useSchemaOrg.js'
 
 const toolCount = allTools.length
 const categoryCount = categories.length
-
-const faqs = [
-  {
-    question: 'FileCut 是什么？和一般在线工具站有什么区别？',
-    answer: `FileCut 是一个纯前端文档工具站，提供 ${toolCount} 个覆盖 PDF、Word、Excel、PPT、图片、音视频、二维码、字体等场景的文件处理工具。与常见在线工具最大的区别是：FileCut 的所有计算都在用户自己的浏览器内完成，文件不会上传到任何服务器，因此不存在因服务器被攻击、运营方数据滥用或第三方审查导致的隐私泄露风险。`
-  },
-  {
-    question: 'FileCut 真的不需要上传文件吗？大文件怎么处理？',
-    answer: '完全不需要上传。FileCut 使用 WebAssembly、Web Worker 和浏览器原生 API 在本地完成解析与转换。对于大文件，工具会通过分块读取（chunked reading）和流式处理来避免一次性加载整个文件，50MB 以上的 PDF 或视频通常也能在普通电脑上完成处理。'
-  },
-  {
-    question: 'FileCut 免费吗？有没有次数或大小限制？',
-    answer: 'FileCut 目前完全免费，没有每日次数限制，也没有文件大小上限。由于所有处理发生在本地，我们的成本主要来自静态资源分发，因此可以将服务免费提供给个人用户、学生和办公场景使用。'
-  },
-  {
-    question: '哪些浏览器支持 FileCut？手机能用吗？',
-    answer: '推荐使用最新版 Chrome、Edge、Firefox 或 Safari。FileCut 依赖现代浏览器支持的 WebAssembly、File API 和 SharedArrayBuffer（部分功能）。移动端可以使用，但由于手机内存和算力限制，处理超过 20MB 的文件时建议在桌面端操作。'
-  },
-  {
-    question: 'FileCut 如何处理加密 PDF 或损坏文件？',
-    answer: '遇到加密 PDF 时，FileCut 会提示用户输入密码，仅在本地解密后处理，解密结果不会离开浏览器。对于结构损坏的文件，工具会尝试修复并给出友好错误提示；如果确实无法修复，会明确告诉用户文件损坏程度，避免误导。'
-  }
-]
 
 const structuredFaqs = {
   '@context': 'https://schema.org',

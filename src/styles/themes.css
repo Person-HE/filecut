@@ -1,0 +1,112 @@
+/* =========================================================================
+   FileCut · 主题系统
+   通过 [data-theme] 属性切换 CSS 变量实现整站换肤
+   设计约束：严禁紫色 · 0 圆角 · 硬阴影 · 保留 Neobrutalism 风格
+   ========================================================================= */
+
+/* ---------- paper · 默认纸质米黄（原主题） ---------- */
+:root,
+[data-theme="paper"] {
+  --paper-bg: #f4ecd8;
+  --paper-card: #fffaf0;
+  --paper-darker: #e8dfc5;
+
+  --ink: #1a1a1a;
+  --ink-soft: #4a4a4a;
+  --ink-muted: #7a7a7a;
+
+  --accent: #ff5a1f;
+  --accent-deep: #d63d00;
+  --accent-soft: #ffe1d3;
+  --neon: #c4ff00;
+  --neon-deep: #87b300;
+  --cyan: #00b3a4;
+  --warning: #ffb800;
+  --danger: #d40000;
+
+  --border-w: 3px;
+  --border-w-thick: 4px;
+  --shadow-sm: 3px 3px 0 var(--ink);
+  --shadow-md: 5px 5px 0 var(--ink);
+  --shadow-lg: 8px 8px 0 var(--ink);
+  --shadow-pressed: 1px 1px 0 var(--ink);
+
+  --noise-light: rgba(255, 255, 255, 0.05);
+  --noise-dark: rgba(0, 0, 0, 0.03);
+}
+
+/* ---------- ink · 暗色墨黑 ---------- */
+[data-theme="ink"] {
+  --paper-bg: #1a1a1a;
+  --paper-card: #262626;
+  --paper-darker: #333333;
+
+  --ink: #f4ecd8;
+  --ink-soft: #c8c0aa;
+  --ink-muted: #8a8474;
+
+  --accent: #ff7a3f;
+  --accent-deep: #ff5a1f;
+  --accent-soft: #3a2818;
+  --neon: #c4ff00;
+  --neon-deep: #87b300;
+  --cyan: #00d4b4;
+  --warning: #ffb800;
+  --danger: #ff4444;
+
+  --noise-light: rgba(255, 255, 255, 0.03);
+  --noise-dark: rgba(0, 0, 0, 0.15);
+}
+
+/* ---------- midnight · 深蓝工程夜 ---------- */
+[data-theme="midnight"] {
+  --paper-bg: #0f1419;
+  --paper-card: #1a2332;
+  --paper-darker: #243044;
+
+  --ink: #d4e0ee;
+  --ink-soft: #9ab0c8;
+  --ink-muted: #6a8098;
+
+  --accent: #ff6b35;
+  --accent-deep: #e0501a;
+  --accent-soft: #2a1810;
+  --neon: #4ade80;
+  --neon-deep: #22c55e;
+  --cyan: #38bdf8;
+  --warning: #fbbf24;
+  --danger: #ef4444;
+
+  --noise-light: rgba(255, 255, 255, 0.02);
+  --noise-dark: rgba(0, 0, 0, 0.2);
+}
+
+/* ---------- contrast · 高对比无障碍 ---------- */
+[data-theme="contrast"] {
+  --paper-bg: #000000;
+  --paper-card: #000000;
+  --paper-darker: #1a1a1a;
+
+  --ink: #ffffff;
+  --ink-soft: #e0e0e0;
+  --ink-muted: #c0c0c0;
+
+  --accent: #ffff00;
+  --accent-deep: #cccc00;
+  --accent-soft: #333300;
+  --neon: #00ffff;
+  --neon-deep: #00cccc;
+  --cyan: #00ffff;
+  --warning: #ffff00;
+  --danger: #ff0000;
+
+  --border-w: 3px;
+  --border-w-thick: 5px;
+  --shadow-sm: 3px 3px 0 var(--ink);
+  --shadow-md: 5px 5px 0 var(--ink);
+  --shadow-lg: 8px 8px 0 var(--ink);
+  --shadow-pressed: 1px 1px 0 var(--ink);
+
+  --noise-light: transparent;
+  --noise-dark: transparent;
+}

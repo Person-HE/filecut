@@ -8,6 +8,7 @@ import { chromium } from 'playwright'
 import http from 'http'
 import fs from 'fs'
 import path from 'path'
+import { execFileSync } from 'child_process'
 import { fileURLToPath } from 'url'
 import { categories, allTools } from '../src/router/categories.js'
 
@@ -15,11 +16,53 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const DIST_DIR = path.resolve(__dirname, '../dist')
 const PORT = 3456
 
-const PREFERRED_BROWSER = process.env.PRERENDER_EXECUTABLE_PATH ||
-  'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'
+/**
+ * 浏览器可执行文件发现
+ * 优先级：PRERENDER_EXECUTABLE_PATH 环境变量 → 常见安装路径 → PATH 查找
+ * 全部失败时回落到 Playwright 自带的 Chromium
+ */
+function findBrowserExecutable() {
+  const envPath = process.env.PRERENDER_EXECUTABLE_PATH
+  if (envPath && fs.existsSync(envPath)) return envPath
 
-// 首选路径不存在时回落到 Playwright 自带的 Chromium，使脚本可在任意机器与 CI 上运行
-const BROWSER_EXECUTABLE = fs.existsSync(PREFERRED_BROWSER) ? PREFERRED_BROWSER : undefined
+  const candidates = process.platform === 'win32'
+    ? [
+        'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
+        'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe',
+        'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+        'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'
+      ]
+    : [
+        '/usr/bin/microsoft-edge',
+        '/usr/bin/microsoft-edge-stable',
+        '/usr/bin/google-chrome',
+        '/usr/bin/google-chrome-stable',
+        '/usr/bin/chromium',
+        '/usr/bin/chromium-browser',
+        '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+        '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge'
+      ]
+
+  for (const candidate of candidates) {
+    if (fs.existsSync(candidate)) return candidate
+  }
+
+  // PATH 兜底
+  const finder = process.platform === 'win32' ? 'where' : 'which'
+  try {
+    const result = execFileSync(finder, process.platform === 'win32'
+      ? ['msedge.exe']
+      : ['chromium'], { stdio: ['ignore', 'pipe', 'ignore'] })
+    const found = result.toString().split(/\r?\n/).find(Boolean)
+    if (found && fs.existsSync(found)) return found
+  } catch (e) {
+    // PATH 中未找到，继续回落到 Playwright Chromium
+  }
+
+  return undefined
+}
+
+const BROWSER_EXECUTABLE = findBrowserExecutable()
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',

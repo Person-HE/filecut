@@ -175,10 +175,4 @@ function downloadResult() {
 }
 .password-row { display: flex; flex-direction: column; gap: 6px; }
 .summary { display: flex; gap: 8px; flex-wrap: wrap; }
-.progress-label {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  margin-top: 6px;
-  color: var(--ink-soft);
-}
 </style>

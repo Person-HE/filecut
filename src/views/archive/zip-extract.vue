@@ -236,7 +236,6 @@ function resetAll() {
 </template>
 
 <style scoped>
-.file-meta { color: var(--ink-soft); font-size: 12px; }
 .hint { color: var(--ink-soft); font-size: 13px; }
 .password-input { display: flex; gap: 8px; align-items: center; }
 .password-input .nb-input { flex: 1; }
@@ -265,12 +264,6 @@ function resetAll() {
 .entry-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .entry-size { color: var(--ink-soft); text-align: right; }
 .entry-date { color: var(--ink-muted); font-size: 11px; }
-.progress-label {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  margin-top: 6px;
-  color: var(--ink-soft);
-}
 @media (max-width: 768px) {
   .entry-item {
     grid-template-columns: 28px 1fr 70px;

@@ -4,35 +4,52 @@
  */
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { categories } from '../router/categories.js'
+import { categoryNames, categoryIcons, toolNames } from '../i18n/toolNames'
 
 const route = useRoute()
+const { t, locale } = useI18n()
 const category = computed(() => categories.find(c => c.id === route.params.id))
+
+const isEn = computed(() => locale.value === 'en-US')
+
+function catName(cat) {
+  return isEn.value ? (categoryNames[cat.id] || cat.name) : cat.name
+}
+
+function catIcon(cat) {
+  return categoryIcons[cat.id] || cat.icon
+}
+
+function toolTitle(tool) {
+  return isEn.value ? (toolNames[tool.id] || tool.title) : tool.title
+}
 </script>
 
 <template>
   <div class="category-page" v-if="category">
     <div class="breadcrumb nb-subtitle">
-      <a href="/">首页</a> / {{ category.name }}
+      <a href="/">{{ t('nav.home') }}</a> / {{ catName(category) }}
     </div>
     <h1 class="nb-title">
-      <span class="cat-icon">{{ category.icon }}</span>
-      {{ category.name }}
+      <span class="cat-icon">{{ catIcon(category) }}</span>
+      {{ catName(category) }}
     </h1>
-    <p class="cat-desc">{{ category.desc }} · 共 {{ category.tools.length }} 个工具</p>
+    <p class="cat-desc">{{ category.desc }} · {{ category.tools.length }} {{ isEn ? 'tools' : '个工具' }}</p>
 
     <div class="tools-grid">
-      <a v-for="t in category.tools" :key="t.id" :href="`${t.path}`" class="tool-card nb-card">
-        <div class="tool-card-icon">{{ t.icon }}</div>
-        <div class="tool-card-title">{{ t.title }}</div>
-        <div class="tool-card-desc">{{ t.desc }}</div>
-        <div class="tool-card-cta">打开 →</div>
+      <a v-for="t2 in category.tools" :key="t2.id" :href="`${t2.path}`" class="tool-card nb-card">
+        <div class="tool-card-icon">{{ t2.icon }}</div>
+        <div class="tool-card-title">{{ toolTitle(t2) }}</div>
+        <div class="tool-card-desc">{{ t2.desc }}</div>
+        <div class="tool-card-cta">{{ isEn ? 'Open →' : '打开 →' }}</div>
       </a>
     </div>
   </div>
   <div v-else class="not-found">
-    <h1 class="nb-title">分类不存在</h1>
-    <a href="/" class="nb-btn primary">返回首页</a>
+    <h1 class="nb-title">{{ isEn ? 'Category not found' : '分类不存在' }}</h1>
+    <a href="/" class="nb-btn primary">{{ isEn ? 'Back to Home' : '返回首页' }}</a>
   </div>
 </template>
 

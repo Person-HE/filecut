@@ -257,7 +257,6 @@ function resetAll() {
 </template>
 
 <style scoped>
-.file-meta { color: var(--ink-soft); font-size: 12px; }
 .password-input { display: flex; gap: 8px; align-items: center; }
 .password-input .nb-input { flex: 1; }
 .summary { display: flex; gap: 8px; flex-wrap: wrap; }

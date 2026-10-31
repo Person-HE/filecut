@@ -7,6 +7,17 @@ import wasm from 'vite-plugin-wasm'
 export default defineConfig({
   plugins: [vue(), wasm()],
   base: '/',
+  resolve: {
+    alias: {
+      // file-type v19 等依赖 node:buffer / node:stream，浏览器构建时需要 polyfill
+      'node:buffer': 'buffer',
+      'node:stream': 'stream-browserify',
+      buffer: 'buffer'
+    }
+  },
+  define: {
+    'global': 'globalThis'
+  },
   build: {
     target: 'es2020',
     outDir: 'dist',

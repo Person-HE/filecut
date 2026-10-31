@@ -368,9 +368,9 @@ onBeforeUnmount(() => {
           <span class="audio-size">{{ formatBytes(f.size) }}</span>
           <span v-if="f.duration" class="audio-dur">{{ formatTime(f.duration) }}</span>
           <div class="audio-actions">
-            <button class="nb-btn sm" :disabled="i === 0" @click="moveFile(i, -1)">↑</button>
-            <button class="nb-btn sm" :disabled="i === files.length - 1" @click="moveFile(i, 1)">↓</button>
-            <button class="nb-btn sm danger" @click="removeFile(i)">×</button>
+            <button class="nb-btn sm" :disabled="i === 0" @click="moveFile(i, -1)" aria-label="上移">↑</button>
+            <button class="nb-btn sm" :disabled="i === files.length - 1" @click="moveFile(i, 1)" aria-label="下移">↓</button>
+            <button class="nb-btn sm danger" @click="removeFile(i)" aria-label="移除">×</button>
           </div>
         </div>
       </div>
@@ -521,12 +521,6 @@ onBeforeUnmount(() => {
   font-size: 11px;
   color: var(--ink-muted);
   margin-top: 4px;
-}
-.progress-label {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  margin-top: 6px;
-  color: var(--ink-soft);
 }
 @media (max-width: 768px) {
   .audio-item {

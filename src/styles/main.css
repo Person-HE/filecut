@@ -4,8 +4,7 @@
    - 反AI味：非主流字体、硬阴影、非对称、荧光色强调
    ========================================================================= */
 
-/* ---------- 字体回退 - 使用 Web 字体 ---------- */
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+/* 字体通过 index.html 的 <link> 加载，避免 @import 阻塞渲染 */
 
 /* ---------- 设计令牌 ---------- */
 :root {

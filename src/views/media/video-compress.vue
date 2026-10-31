@@ -312,7 +312,6 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-.file-meta { color: var(--ink-soft); font-size: 12px; }
 .opt-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -326,12 +325,6 @@ onBeforeUnmount(() => {
   font-size: 11px;
   color: var(--ink-muted);
   margin-top: 4px;
-}
-.progress-label {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  margin-top: 6px;
-  color: var(--ink-soft);
 }
 .success-card { border-color: var(--neon-deep); }
 .result-stats {

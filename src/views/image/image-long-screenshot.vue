@@ -162,8 +162,8 @@ async function process() {
           <span class="sort-idx">{{ i + 1 }}</span>
           <span class="sort-name">{{ f.name }}</span>
           <div class="sort-ops">
-            <button class="nb-btn sm" @click="moveUp(i)" :disabled="i === 0">↑</button>
-            <button class="nb-btn sm" @click="moveDown(i)" :disabled="i === files.length - 1">↓</button>
+            <button class="nb-btn sm" @click="moveUp(i)" :disabled="i === 0" aria-label="上移">↑</button>
+            <button class="nb-btn sm" @click="moveDown(i)" :disabled="i === files.length - 1" aria-label="下移">↓</button>
           </div>
         </div>
       </div>
